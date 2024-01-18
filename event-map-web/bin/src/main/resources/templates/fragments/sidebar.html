@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+	<div th:fragment="sidebar" th:remove="tag">
+	<a name="#"></a>
+	<header  id="header" th:fragment="header" class="d-md-none static-sticky transparent-header clearfix header2 sticky-header">
+
+		<div id="header-wrap" class="header2">
+
+			<div class="container clearfix p-0" style="max-width:100%">
+
+
+				<nav id="primary-menu" class="style-2 with-arrows clearfix">
+
+
+					<ul id="secondary-menu" class="right" style="float: right;">
+						<li ><a href="##" class="menu-with-logo menu-sidebar" name="news-live"><i class="far fa-file-alt fa-fw"></i><span class="hidden-text" th:text="#{label.news}">Canlı Akış</span></a></li>
+						<li ><a href="##" class="menu-with-logo menu-sidebar" name="alarm"><i class="fa fa-bell"></i><span class="hidden-text" th:text="#{label.alarm}">Alarm</span></a></li>
+						<li ><a href="##" class="menu-with-logo menu-sidebar" name="language"><i class="fas fa-globe-europe fa-fw"></i><span class="hidden-text" th:text="#{label.language}">Dil</span></a></li>
+						<li ><a href="##" class="menu-with-logo menu-sidebar" name="time"><i class="far fa-clock fa-fw"></i><span class="hidden-text" th:text="#{label.timeline}">Zaman</span></a></li>
+						<li ><a href="##" class="menu-with-logo menu-sidebar" name="key"><i class="far fa-compass fa-fw"></i><span class="hidden-text" th:text="#{label.key}">Anahtar</span></a></li>
+					</ul>
+
+				</nav><!-- #primary-menu end -->
+
+			</div>
+
+		</div>
+
+	</header>
+	
+
+		
+		<div id="ttt">
+		
+		
+		<!-- <p class="alert-events">Alarmlı Olaylar</p> -->
+		<div id="news-live" class="col-lg-3 col-md-4 col-padding px-0 inside-sidebar sidebar-w pt-0">
+			<!-- News Live Alanı --> 
+			<div class="clearfix">
+				<div class="heading-block nobottommargin pl-3 sidebar-content-header">					
+					<h4 th:text="#{label.news}" class="sidebar-header">Canlı Akış</h4>
+					
+					
+				    <button type="button" class="btn btn-danger alert-events">
+				     <span class="alertText" th:text="#{label.alert.events}" ></span>
+				  	 <span class="badge badge-light alertReadCount" th:text="0"></span>
+					</button>
+					
+    				
+					<!--<input type="button" th:value="#{label.alert.events}"  class="btn btn-danger alert-events"/>	-->										
+					<h5 class="update-news-date"><span class="nocolor" th:text="#{label.news.updated.time}">Güncelleme Zamanı</span><i>: </i><span id="updateDate" class="nocolor">14.05.2020 14:19:51</span></h5>
+
+
+			 
+			
+					<div class="wrap">
+	                    <div class="search eventSearchDiv">
+	                        <input type="text" class="searchTerm" id="eventSearch" th:placeholder="#{label.search}" onkeypress="Page.handleEventSearch(event)">
+	                        <button type="button" class="searchButton" id="eventSearchButton" onClick="Page.eventSearch()">
+	                            <i class="fa fa-search"></i>
+	                        </button>
+	                    
+	                      
+	                    </div>
+      
+                	</div>
+			 
+			 
+					
+
+
+				</div>
+				<div id="sidebarContainer" class="sidebarContainer">
+
+
+				</div>
+			</div>
+			
+			<div class="page-load-status">
+<!-- 				<p class="infinite-scroll-request"> -->
+					<div class="loader-ellips">
+						<span class="loader-ellips__dot"></span>
+						<span class="loader-ellips__dot"></span>
+						<span class="loader-ellips__dot"></span>
+						<span class="loader-ellips__dot"></span>
+					</div>
+<!-- 				</p> -->
+<!-- 				<p class="infinite-scroll-last">End of content</p> -->
+<!-- 				<p class="infinite-scroll-error">No more pages to load</p> -->
+			</div>
+			
+			
+		</div>
+		
+		<div id="alarm"
+			class="col-lg-3 col-md-4 col-padding px-0 inside-sidebar sidebar-w pt-0"
+			style="display: none;">
+			<!-- Alarm Alanı -->
+			<div class="clearfix">
+				<div
+					class="heading-block nobottommargin pl-3 sidebar-content-header">
+					<h4 class="sidebar-header" th:text="#{label.alarms}">Alarmlar</h4>
+					
+					<!-- <input type="search" id="alarmSearch" placeholder="Alarm ara..." name="alarmSearch" > -->
+					
+					<div class="wrap alarmWrap">
+	                    <div class="search">
+	                        <input type="text" class="searchTerm" id="alarmSearch" th:placeholder="#{label.search}" onkeypress="Alert.handleAlarmSearch(event)">
+	                        <button type="button" class="searchButton" id="alarmSearchButton">
+	                            <i class="fa fa-search"></i>
+	                        </button>
+	                        
+	                         
+	                    </div>
+                	</div>
+										
+	
+				</div>
+				<div id="sidebarAlarmContainer">
+
+					
+
+				</div>
+			</div>
+			
+			<div class="page-load-status">
+<!-- 				<p class="infinite-scroll-request"> -->
+					<div class="loader-ellips">
+						<span class="loader-ellips__dot"></span>
+						<span class="loader-ellips__dot"></span>
+						<span class="loader-ellips__dot"></span>
+						<span class="loader-ellips__dot"></span>
+					</div>
+<!-- 				</p> -->
+<!-- 				<p class="infinite-scroll-last">End of content</p> -->
+<!-- 				<p class="infinite-scroll-error">No more pages to load</p> -->
+			</div>
+
+		</div>
+		
+
+		<div id="language"
+			class="col-lg-3 col-md-4 col-padding px-0 inside-sidebar sidebar-w pt-0"
+			style="display: none;">
+			<!-- Dil Alanı -->
+			<div class="clearfix">
+				<div
+					class="heading-block nobottommargin pl-3 sidebar-content-header">
+					<h4 class="sidebar-header" th:text="#{label.language}">Dil</h4>
+				</div>
+				<div class="sidebarContainer">
+
+					<div class="col-md-12 mb-2 mt-2 news-card">
+						<div class="card course-card hover-effect noborder"
+							style="box-shadow: 0 0 20px rgba(0, 0, 0, .2);">
+							<div class="card-body">
+								<div id="locales" class="current language">
+									<ul class="mb-0">
+										<li style="border-bottom: 1px solid;"><a href="#"
+											data-iso="tr" class="lang-style"><img class="flag-w"
+												th:src="@{/image/flags/tr.png}" /> <span
+												th:text="#{langs.tr}">tr</span></a></li>
+										<li><a href="#" data-iso="en"><img class="flag-w"
+												th:src="@{/image/flags/en.png}" /> <span
+												th:text="#{langs.en}" class="lang-style">en</span></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+		<div id="time"
+			class="col-lg-3 col-md-4 col-padding px-0 inside-sidebar sidebar-w pt-0"
+			style="display: none;">
+			<!-- Zaman Alanı -->
+			<div class="clearfix">
+				<div
+					class="heading-block nobottommargin pl-3 sidebar-content-header">
+					<h4 class="sidebar-header" th:text="#{label.timeline}" >Zaman</h4>
+				</div>
+				<div class="sidebarContainer">
+
+					<div class="col-md-12 mb-2 mt-2 news-card">
+						<div class="card course-card hover-effect noborder"
+							style="box-shadow: 0 0 20px rgba(0, 0, 0, .2);">
+							<div class="card-body">
+								<div id="locales" class="current timeLine">
+									<ul class="dd_1">
+										
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+		<div id="key"
+			class="col-lg-3 col-md-4 col-padding px-0 inside-sidebar sidebar-w pt-0"
+			style="display: none;">
+			<!-- Keyword Alanı -->
+			<div class="clearfix">
+				<div
+					class="heading-block nobottommargin pl-3 sidebar-content-header">
+					<h4 class="sidebar-header" th:text="#{label.key}" >Anahtar</h4>
+				</div>
+				<div class="sidebarContainer">
+
+					<div class="col-md-12 mb-2 mt-2 news-card">
+						<div class="card course-card hover-effect noborder"
+							style="box-shadow: 0 0 20px rgba(0, 0, 0, .2);">
+							<div class="card-body">
+								<div id="locales" class="current key">
+									<div id="legend" class="scrotabs">
+
+										
+										<div class="new about abouttext" style="text-align: right !important" th:text="'v-' + ${@environment.getProperty('build.version')}">
+											version
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!--  <div class="new about abouttext" style="text-align: right !important" th:text="'v-' + ${@environment.getProperty('build.version')}">
+						version
+					</div>-->
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+
+	
+	</div>
+</body>
+</html>

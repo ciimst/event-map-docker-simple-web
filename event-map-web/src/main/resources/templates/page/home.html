@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layouts/main_layout}">
+
+<head>
+    <title>Spring Security Example</title>
+</head>
+
+<th:block layout:fragment="link">
+
+    <link rel="stylesheet" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/datepicker.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/timepicker.css}" type="text/css"/>
+    <link th:href="@{/webjars/leaflet/1.6.0/leaflet.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/leaflet/leaflet.draw.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/leaflet/mini.map.css}" rel="stylesheet" type="text/css"/>
+<!--     <link th:href="@{/css/sweetalert.css}" rel="stylesheet" type="text/css"/> -->
+	
+	<link rel="stylesheet" th:href="@{/css/leaflet/MarkerCluster.css}"/>
+    <link rel="stylesheet" th:href="@{/css/leaflet/MarkerCluster.Default.css}"/>
+
+
+ 	<link rel="stylesheet" th:href="@{/css/leaflet/L.Control.HtmlLegend.css}"/>
+    <link rel="stylesheet" th:href="@{/css/leaflet/timedimension/leaflet.timedimension.control.css}"/>
+    <link rel="stylesheet" th:href="@{/css/leaflet/easy-button.css}" type="text/css"/>
+    
+	<link rel="stylesheet" th:href="@{/css/select2.min.css}"/>
+	<link rel="stylesheet" th:href="@{/css/home.css}"/>
+	
+	<link rel="stylesheet" th:href="@{/css/wijmo.min.css}"/>
+	
+	<link rel="stylesheet" th:href="@{/css/beforeafter.min.css}"/>
+	
+	<link rel="stylesheet" th:href="@{/css/bootstrap-toggle.min.css}" type="text/css"/>
+	<link rel="stylesheet" th:href="@{/css/Control.Geocoder.css}"/>
+	<link rel="stylesheet" th:href="@{/css/leaflet/Leaflet.AnimatedSearchBox.css}"/>
+	
+</th:block>
+
+<body layout:fragment="content">
+
+
+<!-- Content
+    ============================================= -->
+<section id="content" class="map-d">
+
+    <div class="container-fluid clearfix px-0">
+
+        <div id="map" class="map radar col-lg-12 col-md-12 col-sm-12 col-12  nopadding gmap d-md-block">
+        </div>
+
+        <div th:replace="fragments/sidebar :: sidebar">Sidebar</div>
+
+    </div>
+</section>
+
+<div class="page-transition-wrap" id="timeDimensionSpinner" style="display: none">
+    <div class="css3-spinner">
+        <div class="css3-spinner-bounce1"></div>
+        <div class="css3-spinner-bounce2"></div>
+        <div class="css3-spinner-bounce3"></div>
+    </div>
+</div>
+</body>
+
+<th:block layout:fragment="script">
+
+    <script th:src="@{/webjars/leaflet/1.6.0/leaflet.js}"></script>
+    <script th:src="@{/js/leaflet/leaflet.draw.js}"></script>
+
+    <script th:src="@{/webjars/jquery-tmpl/jquery.tmpl.js}"></script>
+    <script th:src="@{/js/jquery.infinitescroll.js}"></script>
+    <script th:src="@{/js/leaflet/wise-leaflet-pip.js}"></script>
+    <script th:src="@{/js/cookie.js}"></script>
+    <script th:src="@{/js/map/mini-map.js}"></script>
+
+
+    <script th:src="@{/js/leaflet/leaflet-heat.js}"></script>
+
+
+    <script th:src="@{/js/map/svg-helper.js?v=} + ${@environment.getProperty('build.version')}"></script>
+
+    <script type="text/javascript" th:src="@{/js/leaflet/CanvasMarker.js}"></script>
+    <script type="text/javascript" th:src="@{/js/leaflet/L.Control.HtmlLegend.js}"></script>
+    <script th:src="@{/js/map/map-helper.js?v=} + ${@environment.getProperty('build.version')}"></script>
+
+    <script type="text/javascript" th:src="@{/js/custom/sweetalert.js}"></script>
+
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        paramTimeDimensionMode = [[${timeDimensionMode}]];
+        paramTimeLineStartDate = [[${timeLineStartDate}]];
+        paramLayerId = [[${layerId}]];
+        paramHeatmap = [[${isHeatmap}]];
+        providerUserId = [[${providerUserId}]];
+        paramWriteUserSettingsToCookieAfterLogin = [[${writeUserSettingsToCookieAfterLogin}]];
+        
+//         eventGroupList = [[${eventGroups}]];
+        /*]]>*/
+    </script>
+
+	<script th:src="@{/js/page/common.js?v=} + ${@environment.getProperty('build.version')}"></script>
+
+    <script th:src="@{/js/page/home.js?v=} + ${@environment.getProperty('build.version')}"></script>
+
+
+    <!-- Yeni -->
+    <script type="text/javascript" th:src="@{/js/leaflet/leaflet.markercluster-src.js}"></script>
+
+
+    <script type="text/javascript" th:src="@{/js/leaflet/timedimension/iso8601.min.js}"></script>
+
+    <script type="text/javascript" th:src="@{/js/leaflet/timedimension/leaflet.timedimension.js}"></script>
+    <script type="text/javascript" th:src="@{/js/leaflet/timedimension/leaflet.timedimension.util.js}"></script>
+    <script type="text/javascript" th:src="@{/js/leaflet/timedimension/leaflet.timedimension.player.js}"></script>
+    <script type="text/javascript" th:src="@{/js/leaflet/timedimension/leaflet.timedimension.control.js}"></script>
+    <script th:src="@{/js/leaflet/easy-button.js}"></script>
+    <script type="text/javascript"
+            th:src="@{/js/page/timeDimension.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    <script type="text/javascript"
+            th:src="@{/js/page/heatMap.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    <script th:src="@{/js/custom/alert.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    <script type="text/javascript" th:src="@{/js/custom/xhr-progress.js}"></script>
+    <script th:src="@{/js/select2.min.js}"></script>
+    <script th:src="@{/js/beforeafter.min.js}"></script>
+    <script th:src="@{/js/bootstrap-notify.js}"></script>
+    <script th:src="@{/js/wijmo.min.js}"></script>
+    <script th:src="@{/js/wijmo.nav.min.js}"></script>
+    <script th:src="@{/js/headerMenu.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    <script th:src="@{/js/Control.Geocoder.js}"></script>
+    <script th:src="@{/js/leaflet/Leaflet.AnimatedSearchBox.js}"></script>
+    
+    <script th:src="@{/js/partial/detailedSearch.js?v=}+ ${@environment.getProperty('build.version')}"></script>
+    
+	
+    
+    <script type="text/javascript" th:src="@{/js/bootstrap-toggle.min.js}"></script>
+    
+    <script type="text/javascript" th:src="@{/js/page/imageCompare.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    <script type="text/javascript" th:src="@{/js/daterangepicker.tr.js}"></script>
+    <!-- Yeni -->
+
+</th:block>
+
+<th:block layout:fragment="modal">
+
+	<!-- MODAL -->
+	<div th:replace="modals/detail :: detailModal">detailModal</div>
+	<div th:replace="modals/compare_pictures :: compareModalPictures">compareModalPictures</div>
+	<div th:replace="modals/choose_pictures :: chooseModalPictures">chooseModalPictures</div>
+	<div th:replace="modals/alert_detail :: detailModalAlert">detailModalAlert</div>
+	<div th:replace="modals/alert_add_detail :: detailModalAlertAdd">detailModalAlertAdd</div>
+	<div th:replace="modals/alert_share_detail :: detailModalAlertShare">detailModalAlertShare</div>
+	<div th:replace="modals/detailed_search :: detailModalSearch">detailModalSearch</div>
+    <div th:replace="modals/progress_bar :: progressBar">progressBar</div>
+    <div th:replace="modals/key_detail :: keyDetail">keyDetail</div>
+
+</th:block>
+
+
+</html>

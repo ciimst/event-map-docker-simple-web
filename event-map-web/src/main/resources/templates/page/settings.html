@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_layout}"
+      xmlns:dt="http://www.thymeleaf.org/dandelion/datatables"
+      lang="en">
+    <head>
+        <title>Hello World!</title>
+    </head>
+    
+    <th:block layout:fragment="link">
+    	<link rel="stylesheet" th:href="@{/css/timepicker.css}" type="text/css"/>
+    	<link th:href="@{/css/profile.css?v=} + ${@environment.getProperty('build.version')}" rel="stylesheet" type="text/css" /> 
+    	<link rel="stylesheet" th:href="@{/css/user-settings.css?v=} + ${@environment.getProperty('build.version')}" type="text/css"/>
+    	<link rel="stylesheet" th:href="@{/css/select2.min.css}" type="text/css"/>
+    	
+    	<link rel="stylesheet" th:href="@{/css/wijmo.min.css}"/>
+    	<link th:href="@{/webjars/leaflet/1.6.0/leaflet.css}" rel="stylesheet" type="text/css"/>
+    	<link rel="stylesheet" th:href="@{/css/leaflet/L.Control.HtmlLegend.css}"/>
+    	<link rel="stylesheet" th:href="@{/css/leaflet/easy-button.css}" type="text/css"/>
+    	
+    	
+    </th:block>
+    
+    <body layout:fragment="content" >
+    
+    
+     <section id="page-title content" >
+
+		<div class="container clearfix">
+			<div th:replace="fragments/sidebar :: sidebar">Sidebar</div>
+		</div>
+
+	 </section>
+	 
+		<div class="container clearfix userSettings-menu-title">
+			
+			   <div class="row userSettings-title">
+	                <div class="col-lg-6" >
+	                    <a class="navbar-brand" th:text="#{label.userSettings}"></a>                                    
+	                </div>
+	                <div class="col-lg-6" style="text-align: end;">
+	                 	<a class="navbar-brand" th:text="${userDisplayName}"></a>	
+	                </div>
+	            </div>
+	                            
+			<div class="userSettingsMenu">
+				
+					<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		
+				      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					    <span class="navbar-toggler-icon"></span>
+					  </button>
+					
+					  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+					    <ul class="navbar-nav col-lg-12">
+					      <li class="nav-item" th:if="${instance.key != 'Katman'}" th:each="instance : ${settingsGeneralMap}">
+					        <a th:classappend="${instance.key == groupName ? 'active' : ''}" class="nav-link" th:href="@{'/settings/' + ${layerId} + '/' + ${instance.key}}" th:text="#{label + '.' + ${instance.key}}"> <span class="sr-only">(current)</span></a>
+					        
+					      </li>
+					      
+					      <li class="nav-item dropdown">
+					        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{label.layers}"></a>			
+					        <div class="dropdown-menu" id="dropdownMenu" aria-labelledby="navbarDropdown">
+					          <a th:classappend="${instance.key == groupName ? 'active' : ''}" class="dropdown-item" th:each="instance : ${settingsGeneralLayerMap}" th:href="@{'/settings/' + ${layerId} + '/' + ${instance.key}}" th:text="${instance.key}"></a>			         			     
+					        </div>
+					      </li>
+					    </ul>
+					  </div>
+					</nav>
+				
+			</div>
+		</div>			
+ 
+       	<div class="container clearfix user-settings-form">
+            <div class="form-result"></div>
+	             
+            <div class="row">   
+                <div class="col-lg-12">
+                    <!--begin::Form-->
+                    <form id="settingsForm" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed p-1" >
+ 
+                       <div class="form-group m-form__group row contentSettings" th:each="instance : ${settingsMap}">
+                           
+                         <h5 th:data-group-name = "${instance.key}" class="col-lg-12 pb-2 mt-3 my-2 userSettingsGroupName" th:text="#{label + '.' + ${instance.key}}">test</h5>
+                   		    <div class="col-lg-12 pb-3 mt-0 userSettingsTopLine">
+                       			<hr class="solid" style = "border-top: 2px solid #bbb;"> 
+                   		    </div>
+                            <div  th:each="item, iterStat : ${instance.value}" th:remove="tag" >
+           
+                                <div class="col-lg-4 col-md-4 col-sm-12 pb-4">
+                                    <div th:replace="@{fragments/tag_template} :: 
+      
+                                    (${item.type == 'openPageSelect'} ? 'openPageSelectTemplate'  :
+                                    (${item.type == 'checkbox'} ? 'switchTemplate' : 
+                                    'inputTemplate'))
+                                    
+                                    (additionalParam='false')">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 pb-1 my-2 userSettingsButtons">
+                             	<hr class="solid" style = "border-top: 2px solid #bbb;"> 
+                            
+	                            <div class="form-group m-form__group row justify-content-end">
+	                                <div class="col-lg-8" >
+	                                    <div class="m-input-icon m-input-icon--right">
+	                                        <button type="button" id="settings-save-button" class="btn btn-primary m-btn m-btn--icon m-btn--wide button-r" onclick="Settings.Save()">
+												<span><i class="la la-save"></i><span th:text="#{label.save}"></span></span>
+	                                        </button>
+	                                        <button type="button" id="settings-clean-button" class="btn btn-danger m-btn m-btn--icon m-btn--wide button-r" onclick="Settings.Clean()">
+												<span><i class="la la-clean"></i><span th:text="#{label.clean}"></span></span>
+	                                        </button>
+	                                    </div>
+	                                </div>
+                                    <div class="col-lg-4" style="text-align: end;">
+	                                 	<a class="text-center" th:text="'v-' + ${@environment.getProperty('build.version')}">
+										</a>
+	                                </div>
+	                            </div>
+                            </div>   
+                        </div>
+                        
+                        <!-- <hr class="form-group m-form__group row solid" style = "border-top: 4px solid #bbb;">  -->
+                         <div class="form-group m-form__group row contentSettings" th:each="instance : ${settingsLayerMap}" >                          
+                         	<h5 th:data-group-name = "${instance.key}" class="col-lg-12 pb-2 mt-3 my-2 userSettingsGroupName" th:text="${instance.key}">test</h5>
+                            <div class="col-lg-12 pb-3 mt-0 userSettingsTopLine">
+                       			<hr class="solid" style = "border-top: 2px solid #bbb;"> 
+                   		    </div>
+                            <div th:each="item, iterStat : ${instance.value}" th:remove="tag" >
+           
+                                <div class="col-lg-4 col-md-4 col-sm-12 pb-4">
+                                    <div th:replace="@{fragments/tag_template} :: 
+                                    
+                                    (${item.type == 'checkbox'} ? 'switchTemplate'  : 
+                                    (${item.type == 'select'} ? 'selectTemplate'  : 
+                                    (${item.type == 'multiselect'} ? 'multiselectTemplate'  :
+                                    (${item.type == 'label'} ? 'labelTemplate' :
+                                    (${item.type == 'dateTimePicker'} ? 'dateTimePickerTemplate' :
+                                    'inputTemplate')))))
+                                    
+                                    
+                                    (additionalParam='false')">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 pb-1 my-2 userSettingsButtons">
+                             	<hr class="solid" style = "border-top: 2px solid #bbb;"> 
+                            
+	                            <div class="form-group m-form__group row justify-content-end">
+	                                <div class="col-lg-8" >
+	                                    <div class="m-input-icon m-input-icon--right">
+	                                        <button type="button" id="settings-save-button" class="btn btn-primary m-btn m-btn--icon m-btn--wide button-r" onclick="Settings.Save()">
+												<span><i class="la la-save"></i><span th:text="#{label.save}"></span></span>
+	                                        </button>
+	                                        <button type="button" id="settings-clean-button" class="btn btn-danger m-btn m-btn--icon m-btn--wide button-r" onclick="Settings.Clean()">
+												<span><i class="la la-clean"></i><span th:text="#{label.clean}"></span></span>
+	                                        </button>	    
+	                                    </div> 	                                      
+	                                </div>
+	                                <div class="col-lg-4" style="text-align: end;">
+	                                 	<a class="text-center" th:text="'v-' + ${@environment.getProperty('build.version')}">
+										</a>
+	                                </div>
+	                            </div>
+                            </div>   
+                        </div>
+
+                    </form>
+                    <!--end::Form-->
+                </div>
+            </div>
+        </div>
+        <div class="modal-container">
+        
+        </div>
+  
+    </body>
+    
+       <th:block layout:fragment="script">
+    
+	    <script th:inline="javascript">
+	        /*<![CDATA[*/
+	        paramLayerId = [[${layerId}]];
+// 	        paramTimeLineStartDate = [[${timeLineStartDate}]];
+	        /*]]>*/
+	    </script>
+	   	<script type="text/javascript" th:src="@{/webjars/leaflet/1.6.0/leaflet.js}"></script>
+		<script type="text/javascript" th:src="@{/js/leaflet/leaflet.draw.js}"></script>
+		<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/jquery-tmpl/jquery.tmpl.js}"></script>
+<!-- 		<script type="text/javascript" th:src="@{/js/map/map-helper-table.js?v=} + ${@environment.getProperty('build.version')}"></script> -->
+	    <script type="text/javascript" th:src="@{/js/map/svg-helper.js?v=} + ${@environment.getProperty('build.version')}"></script>
+  		<script th:src="@{/js/wijmo.min.js}"></script>
+    	<script th:src="@{/js/wijmo.nav.min.js}"></script>	 
+	    <script type="text/javascript" th:src="@{/js/custom/sweetalert.js}"></script>
+   		<script type="text/javascript" th:src="@{/js/select2.min.js}"></script>
+	    <script th:src="@{/js/headerMenu.js?v=} + ${@environment.getProperty('build.version')}"></script> 
+	    <script th:src="@{/js/functions.js}"></script>	
+	    
+	    <script th:src="@{/js/page/common.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	    <script th:src="@{/js/page/settings.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	    <script th:src="@{/js/custom/alert.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	    
+	   
+    </th:block>
+    
+    <th:block layout:fragment="modal">
+
+	<!-- MODAL -->
+	
+	<div th:replace="modals/alert_detail :: detailModalAlert">detailModalAlert</div>
+	<div th:replace="modals/alert_add_detail :: detailModalAlertAdd">detailModalAlertAdd</div>
+	<div th:replace="modals/alert_share_detail :: detailModalAlertShare">detailModalAlertShare</div>
+    <div th:replace="modals/progress_bar :: progressBar">progressBar</div>
+    <div th:replace="modals/key_detail :: keyDetail">keyDetail</div>
+
+</th:block>
+</html>

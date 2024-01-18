@@ -1,0 +1,182 @@
+html {
+	background-color: #99999912 !important;   
+}
+
+#ttt{
+	position: absolute;
+}
+
+#page-menu, #page-menu-wrap {
+    position: sticky;
+    
+}
+
+#news-live{
+	display:none;
+}
+
+.nav-link.active, .nav-link:active {
+   border-bottom: 3px solid #007bff;
+   top: -2px;
+   height: 44px;
+   line-height: 44px;
+}
+
+/* Underline Effect*/
+.nav-item {
+  position: relative;
+}
+
+.navbar-collapse ul li a.nav-link:before {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: transparent;
+    content: '';
+    opacity: 0;
+    -ms-transition: opacity 0.3s, -webkit-transform 0.3s;
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    -ms-transform: translateY(10px);
+    -webkit-transform: translateY(10px);
+    transform: translateY(10px);
+}
+
+.navbar-collapse ul li:hover a.nav-link:before {
+	opacity: 1.5;
+	-ms-transform: translateY(0px);
+	-webkit-transform: translateY(0px);
+	transform: translateY(0px);
+	bottom: 0px;
+	background:#007bff;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    color: #ffffff;
+    text-decoration: none;
+    background-color:#007bff;
+}
+#wrapper {
+	background-color: #99999912 !important;   
+}
+
+.user-settings-form{
+    margin-top: 1rem !important;
+    background: white;
+}
+
+.settingsKey {
+	color: #444 !important;
+    font-family: 'Lato', sans-serif !important;
+    font-size:13px !important;
+    text-transform: none;
+    font-weight: bold !important;
+    padding-left: 1px;
+}
+
+
+.contentSettings {
+	/*box-shadow: rgba(149, 157, 165, 0.2) 1px 1px 4px 1px;*/
+	background-color: white !important;   	
+}
+
+.userSettingsGroupName {
+	margin-top: 0.3rem !important;
+    margin-bottom: -0.5rem !important;
+    margin-left: 3px !important;
+	color: #444  !important;
+    font-weight: bold !important;
+    font-family: 'Lato', sans-serif !important;
+    font-size:14px !important;
+    display: block !important;
+    padding: 0 15px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+}
+
+.userSettingsChkLabel {
+ /* display: inline-flex; */
+    bottom: 0.1rem;
+    font-size: 15px;
+} 
+
+.userSettingsCheckbox {
+	box-shadow: inset 0 0 0 9999px rgb(0 0 0 / 2%);
+	background-color: rgb(0 0 0 / 2%);
+	width: 100%;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 10px; 
+    
+}
+
+.userSettingsCheckbox:hover {
+	background-color: rgb(0 0 0 / 4%);
+} 
+
+.navbar-collapse {
+	margin-left: -23px;
+
+}
+
+.userSettings-title {
+	padding-bottom: 7px;
+	padding-top: 25px;
+	padding-left: 5px;
+    color: #444 !important;
+    font-weight: 600;
+    line-height: 1.5;
+   	font-size: 18px;
+ 	font-family: 'Lato', sans-serif;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #444  !important;
+    font-weight: bold !important;
+    font-family: 'Lato', sans-serif !important;
+    font-size:14px !important;
+    display: block !important;
+    padding: 0 12px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+}
+
+.navbar-light .navbar-nav .dropdown-item {
+    font-weight: bold !important;
+    font-family: 'Lato', sans-serif !important;
+    font-size: 14px !important;
+    display: block !important;
+    padding: 0 15px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+}
+
+.bg-light {
+    background-color: white !important;   
+}
+
+.settingsValue {  
+    font-size: 14px !important;    
+    color: #495057 !important; 
+}
+
+.navbar-collapse {
+	/*border-bottom: 1px solid #bbb;*/
+    margin-bottom: 8px;
+}
+
+.userSettingsButtons {
+    margin-top: -0.5rem !important;
+}
+
+.userSettingsTopLine {
+	padding-bottom: 0.25rem !important;
+}
+
+.userSettings-menu-title {
+	background-color: white !important;   
+	/*box-shadow: rgba(149, 157, 165, 0.2) 1px 1px 4px 1px;*/
+    margin-top: 15px;
+}

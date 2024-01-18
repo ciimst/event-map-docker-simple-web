@@ -1,0 +1,21 @@
+<ul class="dd_1">
+	<li class="li_dd1" data-data="year_${years[0]-1}">
+		<a class='y' href='#'>${years[0]-1}</a>
+		<ul class="dd_2">
+		{{each(i, startM) startMonths}}
+ 			<li class="li_dd2" data-data="month_${years[0]-1}_${startM}">
+        		<a class="m" href="#">${CustomFormatter.GetMonthName(startM-1)}</a>
+        		<ul class="dd_3">
+        		{{each(i, startD) startDays}}        		
+        			<li class="">
+        				<a class="d" href="/time/" data-data="">
+        					${startD.padStart(2, '0')} + ${CustomFormatter.GetDateFormatted(createDate)}
+        				</a>
+       				</li>
+       			{{/each}}
+        		</ul>
+        	</li>        		
+		{{/each}}
+		</ul>
+	</li>
+</ul>

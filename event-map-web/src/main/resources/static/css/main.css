@@ -1,0 +1,4 @@
+#navbarUl .dropdown-menu.show {
+    height: calc(100vh - 140px);
+    overflow-y: auto;
+}

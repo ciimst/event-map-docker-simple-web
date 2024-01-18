@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{layouts/main_layout}">
+
+<head>
+<title>Spring Security Example</title>
+</head>
+
+<th:block layout:fragment="link">
+
+	<link th:href="@{/webjars/leaflet/1.6.0/leaflet.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/css/leaflet/leaflet.draw.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/css/leaflet/mini.map.css}" rel="stylesheet" type="text/css" />
+	<link thref="/css/sweetalert.css" rel="stylesheet" type="text/css" />
+	<style>
+	
+		
+		
+		.video-overlay {
+		  
+		  
+		  background: url(http://www.slatecube.com/images/play-btn.png);
+		  
+		  background-size: 50px 50px;
+		  background-repeat: no-repeat;
+		  background-position: center;
+		}
+		
+		.video-play-icon {
+			position: absolute;
+			color: white;
+			left: 42%;
+			top: 38%; 
+		}
+	</style>
+</th:block>
+
+<body layout:fragment="content">
+
+
+	<!-- Content
+		============================================= -->
+	<section id="content" class="map-d">
+
+
+		<div class="container-fluid clearfix px-0">
+
+				<div id="map" class="map col-lg-12 col-md-12 col-sm-12 col-12  nopadding gmap d-md-block">
+				</div>
+	
+				<div th:replace="fragments/sidebar :: sidebar">Sidebar</div>
+
+		</div>
+	</section>
+</body>
+
+<th:block layout:fragment="script">
+
+	<script th:src="@{/webjars/leaflet/1.6.0/leaflet.js}"></script>
+	<script th:src="@{/js/leaflet/leaflet.draw.js}"></script>
+		
+	<script th:src="@{/webjars/jquery-tmpl/jquery.tmpl.js}"></script>
+	<script th:src="@{/js/jquery.infinitescroll.js}"></script>
+	<script th:src="@{/js/leaflet/wise-leaflet-pip.js}"></script>
+	<script th:src="@{/js/cookie.js}"></script>
+	<script th:src="@{/js/map/mini-map.js}"></script>
+
+	<script th:src="@{/js/map/svg-helper.js?v=} + ${@environment.getProperty('build.version')}"></script>	
+	<script th:src="@{/js/map/map-helper.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	
+	<script type="text/javascript" src="/js/custom/sweetalert.js"></script>
+
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+
+		paramTimeLineStartDate = [[${timeLineStartDate}]];
+		paramLayerId = [[${layerId}]];
+		
+		/*]]>*/
+	</script>
+
+        
+	<script th:src="@{/js/page/home.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	
+
+</th:block>
+
+<th:block layout:fragment="modal">
+
+	<!-- MODAL -->
+	<div th:replace="modals/detail :: detailModal">detailModal</div>
+	<div th:replace="modals/alert_detail :: detailModalAlert">detailModalAlert</div>
+	<div th:replace="modals/alert_add_detail :: detailModalAlertAdd">detailModalAlertAdd</div>
+	<div th:replace="modals/alert_share_detail :: detailModalAlertShare">detailModalAlertShare</div>
+
+</th:block>
+
+
+</html>

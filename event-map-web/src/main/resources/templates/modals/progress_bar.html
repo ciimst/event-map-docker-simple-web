@@ -1,0 +1,25 @@
+<div th:fragment="progressBar">
+    <div class="page-transition-wrap" id="progressDialog" tabindex="-1" role="dialog"
+         aria-labelledby="progressModalLabel"
+         style="display:none">
+        <div class="page-transition-wrap">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="border: 0; border-radius: 8px !important;">
+                    <div class="modal-header">
+                        <h5 th:text="#{label.map.progress}" class="modal-title" style="font-size:17px !important; font-weight: normal !important;">
+                            Harita yükleniyor. Lütfen bekleyin.
+                        </h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="progress" style="height: 25px;">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" id="modalProgressBar"
+                                 role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                                 style="width: 0; transition:none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <div class="container">
+      <div class="hero-unit">
+        <h1>Test</h1>
+        <p>
+          Welcome to the Spring MVC Quickstart application!
+          Get started quickly by signing up.
+        </p>
+        <p>
+        	<img alt="" th:src="${tileUrl}">
+          
+			<table>
+			   <th:block th:each="tilesRow : ${tiles}">
+			      <tr>
+			      	<th:block th:each="tile : ${tilesRow}">
+			      		<td ><img alt="" th:src="${tile}"></td>
+			         
+			      	</th:block>
+			         
+			      </tr>
+			   </th:block>
+			</table>
+			
+
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

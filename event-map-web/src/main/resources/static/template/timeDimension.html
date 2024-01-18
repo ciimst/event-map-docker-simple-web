@@ -1,0 +1,43 @@
+<div class="row timeDimentionBottommargin ">
+
+	<div id="abc" class="timeDimensionDateRangeDiv">
+
+		<label class="labelTimeDimention timeDimensionDateTimePickerLabel">
+			${lang.props["label.startAndFinishDate"]}:</label>
+		<div class="input-group tleft timeDimensionDateDiv" data-target-input="nearest"
+			data-target=".daterangepicker">
+			<input name="daterange2" type="text" id="daterange2" class="form-control daterange2 timeDimensionDateRange" value="${newDates}" />
+			<div class="input-group-append" data-target=".daterange2" data-toggle="daterange2">
+				<div class="input-group-text daterange2Icon">
+					<i class="icon-calendar"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row timeDimensionGeneralDiv">
+		<div class="timeDimensionPeriodTime">
+			<label class="labelTimeDimention">${lang.props["label.duration"]}:</label>
+			<input type="text" id="periodTime" class="form-control periodTime" />
+		</div>
+		<div class="timeDimensionPeriodType">
+			<label class="labelTimeDimention">${lang.props["label.time.type"]}:</label>
+			<select id="periodType" class="form-control selectpicker periodType">
+				<option value="minute">${lang.props["label.minute"]}</option>
+				<option value="hour">${lang.props["label.hour"]}</option>
+			</select>
+		</div>
+
+
+		<div class="timeDimensionSearchButtonDiv">
+			<button
+				class="button button-small button-circle button-leaf labelTimeDimention"
+				style="background-color: #444; border-radius: inherit !important"
+				onclick="TimeDimension.TimeDimensionSearch()">
+				<i class="icon-search"></i>${lang.props["label.search"]}
+			</button>
+		</div>
+
+	</div>
+
+</div>

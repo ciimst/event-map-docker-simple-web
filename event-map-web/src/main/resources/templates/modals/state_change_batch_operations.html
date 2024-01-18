@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<div th:fragment="stateChangeBatchOperations">
+    <!-- Modal -->
+    <div class="modal fade" id="stateChangeBatchOperations" tabindex="-1"
+         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-body">
+                <div class="modal-content">
+                    <div class="modal-header header-info d-block">
+                        <div class="row mx-4">
+                            <h4 class="modal-title" th:text="#{label.batch.state.change}" id="keyDetailModalTitle">Toplu Durum Değiştirme İşlemi</h4>
+
+                            <button type="button"  class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal-body px-0 pb-0">
+                        <div class="container text-area px-4">
+                            <div class="modal-body">
+                                <div class="col-sm-12 p-2">
+									<span class="col-9" th:text="#{label.state}" style="margin-left: -15px;">Durum</span>
+									<span class="col-3 m-switch m-switch--sm switch">
+										<label>
+											<input type="checkbox"
+												   id="eventBatchOperationsState"
+												   th:name="state"
+												   th:checked="false"
+												   th:value="false">
+											 <span class="slider round"></span>
+										</label>
+									</span>
+								</div>
+								
+								<div class="col-sm-12 p-2">
+									<p>
+					                   <span><span style="float: left" id="eventBatchOperationsInfo" class="col-9 pl-0" ></span></span>
+					                </p>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                    
+                     <button type="button" class="btn btn-primary " 
+                                data-dismiss="modal" onClick="EventTable.BatchStateChanged()" th:text="#{label.ok}">Tamam</button>
+                        <button type="button" class="btn btn-secondary " 
+                                data-dismiss="modal" th:text="#{label.close}">Kapat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

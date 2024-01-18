@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- begin::Head -->
+<head th:fragment="head">
+
+	<title>AFAD | Map</title>
+
+	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	<meta http-equiv="refresh" th:content="${pageRefreshTime}">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="Latest updates and statistic charts">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	
+	<!--begin::Base Styles -->	
+	<link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css" />
+
+	<link rel="stylesheet" th:href="@{/css/font-icons.css}" type="text/css" />
+	
+	<link rel="stylesheet" th:href="@{/css/animate.css}" type="text/css" />
+	
+	<link rel="stylesheet" th:href="@{/css/magnific-popup.css}" type="text/css" />
+	
+	<link rel="stylesheet" th:href="@{/css/toastr.min.css}" type="text/css" />
+	
+	<!--end::Base Styles -->
+	
+
+	<!--begin::Custom Styles favicon -->
+	<link rel="shortcut icon" th:href="@{'/image/static/' + ${T(com.imst.event.map.web.utils.SettingsUtil).getFaviconImage()}}"	type="image/x-icon" />
+	
+	<link rel="stylesheet" th:href="@{/css/fonts.css?v=} + ${@environment.getProperty('build.version')}" type="text/css" />
+	
+	<link rel="stylesheet" th:href="@{/css/style.css?v=} + ${@environment.getProperty('build.version')}" type="text/css" />
+	
+	<link rel="stylesheet" th:href="@{/css/responsive.css?v=} + ${@environment.getProperty('build.version')}" type="text/css" />
+	
+	<link rel="stylesheet" th:href="@{/css/global.css?v=} + ${@environment.getProperty('build.version')}" type="text/css" />
+	
+	<link rel="stylesheet" th:href="@{/css/all.css?v=} + ${@environment.getProperty('build.version')}" type="text/css" />
+	
+	<link rel="stylesheet" th:href="@{/css/loader-ellipse.css?v=} + ${@environment.getProperty('build.version')}" type="text/css" />
+	
+	
+	<!--end::Custom Styles -->
+	
+	<th:block layout:fragment="link"></th:block>
+	
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		
+		var contextPath = [[@{/}]];
+		
+		/*]]>*/
+	</script>
+	
+</head>
+<!-- end::Head -->
+</html>

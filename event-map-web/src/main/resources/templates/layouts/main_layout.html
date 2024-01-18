@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/head :: head">
+</head>
+	<link rel="stylesheet" th:href="@{/css/introjs.min.css}" type="text/css"/>
+	<link rel="stylesheet" th:href="@{/css/introjs-modern.css}" type="text/css"/>
+ 	<link rel="stylesheet" th:href="@{/css/main.css}" type="text/css" />
+<body class="stretched sticky-footer device-xl">
+
+	<div id="wrapper" class="clearfix">
+	
+		<div th:replace="fragments/header :: header" >Header</div>
+		
+		<div layout:fragment="content">Page Content</div>
+		
+		<footer th:replace="fragments/footer :: footer" >Footer</footer>
+
+	</div>
+	
+
+	<!-- MODAL -->
+	<th:block layout:fragment="modal"></th:block>
+	
+		<!-- External JavaScripts
+	============================================= -->
+	
+	<script th:src="@{/js/intro.min.js}"></script>
+	<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+	<script th:src="@{/js/jquery.bootstrap.js?v=} + ${@environment.getProperty('build.version')}"></script>	
+	<script th:src="@{/js/jquery.flexslider.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	<script th:src="@{/js/jquery.cookie.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	<script th:src="@{/js/jquery.isotope.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	<script th:src="@{/js/jquery.magnific.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	
+	<script th:src="@{/js/dateUtils.js}"></script>
+	<script th:src="@{/js/toastr.min.js}"></script>
+	<script th:src="@{/js/jquery.scrollTo.js}"></script>
+	<script th:src="@{/js/jquery-dateformat.js}"></script>
+	<script th:src="@{/js/jquery.blockUI.js}"></script>
+ 	<script th:src="@{/js/moment-with-locales.js}"></script>
+	
+ 	<script th:src="@{/js/daterangepicker.js}"></script>
+	<script th:src="@{/js/datepicker.js}"></script>
+	<script th:src="@{/js/timepicker.js}"></script>
+	<script th:src="@{/js/functions.js?v=} + ${@environment.getProperty('build.version')}"></script>
+
+    <script th:src="@{/js/lightbox/lightgallery.js}"></script>
+    <script th:src="@{/js/lightbox/lg-fullscreen.js}"></script>
+    <script th:src="@{/js/lightbox/lg-thumbnail.js}"></script>
+    <script th:src="@{/js/lightbox/lg-autoplay.js}"></script>
+    <script th:src="@{/js/lightbox/lg-zoom.js}"></script>
+    <script th:src="@{/js/lightbox/lg-hash.js}"></script>
+    <script th:src="@{/js/lightbox/lg-pager.js}"></script>
+    <script th:src="@{/js/lightbox/jquery.mousewheel.min.js}"></script>
+    
+
+
+	<!-- Footer Scripts
+	============================================= -->
+	<script th:src="@{/js/lang.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+
+		
+// 		var contextPath = [[@{/}]];
+// 		var lang_iso = [[#{lang.iso}]];
+		var app_version = [[${@environment.getProperty('build.version')}]];
+		lang.load([[${@i18nController.getMessages()}]]);
+		let navtime = [[${time}]];
+		let pageRefreshTime = [[${pageRefreshTime}]];
+		
+
+		var csrf_token = [[${_csrf.token}]];
+		var csrf_header = [[${_csrf.headerName}]];
+		// Run for all ajax call
+		$(document).ajaxSend(function(e,xhr,options) {
+			xhr.setRequestHeader(csrf_header, csrf_token);
+			if(!options.url.startsWith(contextPathWithoutSlash)){
+				options.url = contextPathWithoutSlash + options.url;
+			}
+		});
+
+		var defaultUserSettingsGroupName = [[${userSettingsId}]];
+		paramTimeLineStartDate = [[${timeLineStartDate}]];
+
+		var eventGroupList = [[${eventGroups}]];
+		
+	/*]]>*/
+	</script>
+
+<!-- 	Custom Js 	-->
+	<script th:src="@{/js/custom/formatter.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	<script th:src="@{/js/custom/jquery-template-helper.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	<script th:src="@{/js/custom/toastr-helper.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	<script th:src="@{/js/custom/search-helper.js?v=} + ${@environment.getProperty('build.version')}"></script>
+
+	<script th:src="@{/js/page/main.js?v=} + ${@environment.getProperty('build.version')}"></script>
+	
+	<script th:src="@{/js/jquery-ui.min.js}"></script>
+<!-- 	Page Js 	-->
+	<th:block layout:fragment="script"></th:block>
+	
+	
+</body>
+</html>

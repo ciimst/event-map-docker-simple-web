@@ -1,0 +1,37 @@
+Eksik tablolar
+alert
+event_media
+geo_layer
+log_type
+permission->profilden ayarlanabiliyor.
+settings
+user_extra_permission
+user_group_id
+user_user_id
+user_layer_permission
+
+
+user_event_permission->silinecek
+
+1)
+2)order-sort alanında yapılmış.
+3)zoom düzgün çalısıyor.
+4)?? yok 
+5)resim upload edecek yer yok!!!
+6)ApiUserUserId ve ApiUserGroupId servicelerinin sayfaları yok.
+
+
+
+
+home.js de id ye veya hrefe at id bilgilerini.
+onuda parametre olarak loadkeyclickevent gönder. url içinde ? ile yaz. controllerda al onu 
+
+sessionUser da currentLayer diye bir alan aç ve veriyi ona gönder/al.sessionda öyle tutmuş olucaz!!!
+
+homecontrollerda cağirip statics.layuerıd lere göndermem gerekior.
+
+5 0
+1 1
+2 2
+
+geolayer - event specification - event group - map area group - map area - AlertController eklendi.(session)

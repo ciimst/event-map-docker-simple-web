@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layouts/main_layout}">
+
+<head>
+    <title>Table Child Row Deneme</title>
+</head>
+
+<th:block layout:fragment="link">
+
+    <link rel="stylesheet" th:href="@{/css/timepicker.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/datatables/jquery.dataTables.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/webjars/leaflet/1.6.0/leaflet.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/leaflet/leaflet.draw.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/select2.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/wijmo.min.css}" type="text/css"/>
+
+<!--     <link rel="stylesheet" th:href="@{/css/sweetalert.css}" type="text/css"/> -->
+    <link rel="stylesheet" th:href="@{/css/beforeafter.min.css}"/>
+    
+    
+</th:block>
+
+<body layout:fragment="content">
+	
+	<section id="content" class="map-d eventTableSection">
+	    <div class="container-fluid clearfix px-0">
+	
+	        <div th:replace="fragments/sidebar :: sidebar">Sidebar</div>
+	
+	    </div>
+	</section>
+
+<div class="container mt-3">
+	<div class="row d-flex justify-content-center">
+
+    	<div class="col-md-12">
+
+        	<div class="p-3 py-2 advanced-search">
+
+				<div class="  input-group search eventTextSearch">
+					
+					<input type="text" class="form-control" id="eventSearchEventTable" th:placeholder="#{label.search}"  aria-describedby="basic-addon2" onkeypress="DetailedSearch.HandleEventSearch(event)">
+					
+					<div class="input-group-append"  id="searchButton" >
+						<span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+					</div>
+					
+					<div class="advanced input-group search detailedSearchDiv detailedSearchDivNewsLive mt-1" style="text-align: right;" id="detailedSearchDivNewsLive">
+						<p style="left: 0px;"> <span class="detailedSearchSpan" onClick="DetailedSearch.AdvancedSearchModalOpen()" th:text="#{label.detailed.event.search}">Detaylı Arama</span><span id="detailedSearchBadgeEventMap" class="badge badge-secondary detailedSearchBadgeCount"></span></p>
+						<button class="btn btn-sm eventTableExcelExport" onclick="EventTable.ExcelFileDownload()" th:text="#{label.export.to.excel}">Excel Aktar</button>
+						<button id="intro-to" class="btn btn-sm eventTableExcelExport" style="left: 100px;"><i class="fa fa-info-circle"></i></button>
+					</div>
+					
+					
+					
+				</div>
+				
+        	</div>
+    	</div>
+	</div>
+</div>
+        
+
+
+
+<div id="tableContainer" class="container-fullwidth mt-2 overflow-auto table-responsive" style="padding-bottom: 300px; ">
+    <table id="eventTable" class="display" style="width:100%; border-top: 1px solid rgba(0, 0, 0, 0.125);    padding-top: 10px;">
+        <thead>
+        <tr>
+        	<th></th>
+           	<th th:text="#{label.event.type}">Olay Türü</th>
+           	<th th:text="#{label.alarm}">Alarm</th>
+           	<th th:text="#{label.title}">Başlık</th>
+           	<th th:text="#{label.coordinate}">Koordinat</th>
+           	<th th:text="#{label.event.date}">Olay Tarihi</th>
+           	<th th:text="#{label.event.date}">Olay Tarihi</th>
+           	<th th:text="#{label.event.date}">Olay Tarihi</th>
+           	<th th:text="#{label.event.city}">Şehir</th>
+           	<th th:text="#{label.event.city} + '/' + #{label.event.country}">Şehir/Ülke</th>
+           	<th th:text="#{label.event.group}">Olay Grubu</th>
+           	<th th:text="#{label.event.spot}">Kısa Açıklama</th>
+           	<th th:text="${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved1') ) } : ${ @environment.getProperty('event.reserved1') } ">Reserved 1</th>
+           	<th th:text="${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved2') ) } : ${ @environment.getProperty('event.reserved2') } ">Reserved 2</th>      	
+           	<th th:text="${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved3') ) } : ${ @environment.getProperty('event.reserved3') } ">Reserved 3</th>          	      	
+           	<th th:text="${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved4') ) } : ${ @environment.getProperty('event.reserved4') } ">Reserved 4</th>
+           	<th th:text="${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved5') ) } : ${ @environment.getProperty('event.reserved5') } ">Reserved 5</th>
+           	
+           	
+           	
+        </tr>
+        </thead>
+    </table>
+</div>
+<div id="mapContainer" class="w-100 mt-0 p-0" style="display: none; position: fixed; bottom: 0px; height: 250px; background-color: white;box-shadow: 20px 20px 20px 20px grey;">
+<!--     <div style="background-color: #cdd7db; text-align: right;"> -->
+        <button id="btnCloseMap" type="button" class="btn btn-sm btn-danger mr-1 my-1" style=" position: absolute; z-index: 1000; right: 0; top: -45px;">
+            Haritayı Kapat [X]
+        </button>
+<!--     </div> -->
+    <div id="map" class="w-100 mw-100" style="height: 250px;">
+    </div>
+</div>
+
+<div class="page-transition-wrap" id="timeDimensionSpinner" style="display: none">
+    <div class="css3-spinner">
+        <div class="css3-spinner-bounce1"></div>
+        <div class="css3-spinner-bounce2"></div>
+        <div class="css3-spinner-bounce3"></div>
+    </div>
+</div>
+</body>
+
+<th:block layout:fragment="script">
+
+    <script type="text/javascript" th:src="@{/js/datatables/jquery.dataTables.min.js}"></script>
+        
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var paramLayerId = [[${layerId}]];
+        paramTimeLineStartDate = [[${timeLineStartDate}]];
+        var TimeDimension = {}
+        TimeDimension.timeDimensionMode = false;
+
+        var HeatMap = {};
+        HeatMap.isHeatmap = false;
+
+        var dataTableRowCount = [[${dataTableRowCount}]];
+        var pageRefreshDate = [[${pageRefreshDate}]];
+        var pageRefreshTimeInterval = [[${pageRefreshTimeInterval}]]; 
+
+        var paramMaxCountEventsExcel = [[${maxCountEventsExcel}]];
+        paramWriteUserSettingsToCookieAfterLogin = [[${writeUserSettingsToCookieAfterLogin}]];
+        providerUserId = [[${providerUserId}]];
+        
+        /*]]>*/
+    </script>
+    
+	<script type="text/javascript" th:src="@{/webjars/leaflet/1.6.0/leaflet.js}"></script>
+	<script type="text/javascript" th:src="@{/js/leaflet/leaflet.draw.js}"></script>
+	<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery-tmpl/jquery.tmpl.js}"></script>
+	<script type="text/javascript" th:src="@{/js/leaflet/CanvasMarker.js}"></script>
+	<script type="text/javascript" th:src="@{/js/map/map-helper-table.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    <script type="text/javascript" th:src="@{/js/map/svg-helper.js?v=} + ${@environment.getProperty('build.version')}"></script>
+  	<script type="text/javascript" th:src="@{/js/select2.min.js}"></script>
+  	<script type="text/javascript" th:src="@{/js/wijmo.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/wijmo.nav.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/custom/sweetalert.js}"></script>
+  	
+  	<script type="text/javascript" th:src="@{/js/page/common.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    
+    <script type="text/javascript" th:src="@{/js/page/eventTable.js?v=} + ${@environment.getProperty('build.version')}"></script> 
+    <script type="text/javascript" th:src="@{/js/custom/alert.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    <script th:src="@{/js/beforeafter.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/page/imageCompare.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    <script th:src="@{/js/headerMenu.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    <script th:src="@{/js/partial/detailedSearch.js?v=}+ ${@environment.getProperty('build.version')}"></script>
+    <script type="text/javascript" th:src="@{/js/custom/event-table-column.js?v=} + ${@environment.getProperty('build.version')}"></script>
+</th:block>
+
+
+<th:block layout:fragment="modal">
+
+	<!-- MODAL -->
+	<div th:replace="modals/detailed_search :: detailModalSearch">detailModalSearch</div>
+	<div th:replace="modals/key_detail :: keyDetail">keyDetail</div>
+	<div th:replace="modals/alert_detail :: detailModalAlert">detailModalAlert</div>
+	<div th:replace="modals/alert_share_detail :: detailModalAlertShare">detailModalAlertShare</div>
+	<div th:replace="modals/compare_pictures :: compareModalPictures">compareModalPictures</div>
+	<div th:replace="modals/choose_pictures :: chooseModalPictures">chooseModalPictures</div>
+	<div th:replace="modals/alert_add_detail :: detailModalAlertAdd">detailModalAlertAdd</div>
+
+</th:block>
+</html>

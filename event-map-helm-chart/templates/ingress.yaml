@@ -1,0 +1,31 @@
+{{- if .Values.Ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+  annotations:
+    {{- if .Values.Properties.Admin.SERVER_SSL_ENABLED }}
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    {{- end }}
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: 64m
+    # nginx.ingress.kubernetes.io/rewrite-target: /afad
+    # nginx.ingress.kubernetes.io/app-root: /afad
+    # nginx.ingress.kubernetes.io/add-base-url: /afad
+    # nginx.ingress.kubernetes.io/affinity: "cookie" 
+    # nginx.ingress.kubernetes.io/session-cookie-path: "/"
+spec:
+  # ingressClassName: nginx
+  rules:
+  - host: {{ .Values.Ingress.Hostname }}
+    http:
+      paths:
+      - path: {{ .Values.Ingress.WebPath }}
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.Svc.Web.name }}
+            port:
+              number: {{ .Values.Svc.Web.port }}
+---
+{{- end }}

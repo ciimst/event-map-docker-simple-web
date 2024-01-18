@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<type-mapping>
+		<sql-type jdbc-type="INTEGER"
+			hibernate-type="java.lang.Integer">
+		</sql-type>
+		<sql-type jdbc-type="BIT" hibernate-type="java.lang.Boolean"></sql-type>
+		<sql-type jdbc-type="SMALLINT"
+			hibernate-type="java.lang.Short">
+		</sql-type>
+		<sql-type jdbc-type="BIGINT" hibernate-type="java.lang.Long"></sql-type>
+		<sql-type jdbc-type="TIMESTAMP"
+			hibernate-type=" java.sql.Timestamp " >
+		</sql-type>
+		
+
+	
+	</type-mapping>
+	
+	<table schema="public" name="alert">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+		<column name="polygon_coordinate" type="com.vividsolutions.jts.geom.Polygon"></column>
+	</table>
+	
+	<table schema="public" name="spatial_test">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+		<column name="poly_test" type="com.vividsolutions.jts.geom.Polygon"></column>
+		<column name="point_test" type="com.vividsolutions.jts.geom.Point"></column>
+	</table>
+	
+	
+	<table schema="public" name="alert_state">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	
+	<table schema="public" name="alert_event">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	
+
+	<table schema="public" name="layer">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	
+	<table schema="public" name="layer_export">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	
+
+
+
+	<table schema="public" name="map_area">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	
+	<table schema="public" name="user_layer_permission">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+
+
+	<table schema="public" name="event">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>		
+<!-- 		<foreign-key constraint-name="fk_event_mapping_event_id"> -->
+<!-- 		 	<one-to-one exclude="false"/> map by -->
+<!-- 		   	<inverse-one-to-one exclude="true"/> constraint name -->
+<!-- 		</foreign-key> -->
+<!-- 		<foreign-key constraint-name="fk_event_mapping_event_id" foreign-table="event_mapping"> -->
+<!-- 		   	<column-ref local-column="id" foreign-column="fk_event_id" />  -->
+<!-- 		</foreign-key> -->
+		
+	</table>
+
+	<table schema="public" name="event_mapping">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>		
+<!-- 		<foreign-key constraint-name="fk_event_mapping_event_id"> -->
+		   	
+<!-- 		</foreign-key> -->
+
+		
+	</table>	
+
+
+	<table schema="public" name="event_tag">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+
+
+	<table schema="public" name="event_media">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+
+
+	<table schema="public" name="tile_server">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+
+	<table schema="public" name="settings">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+
+
+
+	<table schema="public" name="geo_layer">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	
+	<table schema="public" name="map_area_group">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	
+	
+	<table schema="public" name="event_group">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	
+	
+	<table schema="public" name="subdomain">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	
+	
+
+	<table schema="public" name="log">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+
+
+	<table schema="public" name="tag">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+
+
+	<table schema="public" name="event_type">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+
+
+	<table schema="public" name="profile_permission">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+
+	<table schema="public" name="user">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+
+	<table schema="public" name="user_extra_permission">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	
+	<table schema="public" name="user_event_permission">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	
+	<table schema="public" name="user_group_id">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	
+	<table schema="public" name="user_user_id">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	
+
+	<table schema="public" name="profile">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+
+
+</hibernate-reverse-engineering>

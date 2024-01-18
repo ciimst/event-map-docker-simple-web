@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"  
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+		lang="en"
+		
+	    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	    
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+   
+<div th:fragment="detailModalAlertShare">
+			<!-- Modal -->
+	<div class="modal fade" id="myModalAlertShare" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-body">
+				<div class="modal-content">
+					<div class="modal-header header-info d-block">
+						
+<!-- 											<h4 class="modal-title" id="myModalLabel">Modal Heading</h4> -->
+
+						<button type="button" class="close" data-not-close-id="myModalAlertAddModalNotClose" data-dismiss="modal" aria-hidden="true">&times;</button>	
+						<i class="fa fa-bell fa-2x alarmIconAlertModal" aria-hidden="true"></i>							
+						<h4 class="mr-2 mb-2 t500" th:text="#{label.alert.share}">Alarm Paylaşma</h4>
+						
+						
+					</div>
+					<div class="modal-body px-0 pb-0">
+						<div class="container text-area px-4"> <!-- Modal Text Alanı -->
+							<div class="img-location-time-area ">
+																																																																																																				
+							</div>							
+							
+							<form id="alertShareForm" name="contact" role="form">
+								<div class="modal-body">
+																																			    																
+  						
+
+									
+									 <div class="form-group">
+			                            <select class="form-control m-select2 m_select2_12_4 select2 shareableUsers"
+			                                    id="shareableUsers"
+			                                    name="userId"
+			                                    multiple="multiple"
+			                                   >
+			                            </select>
+			                        </div>
+                        
+									
+									 <div class="form-check">
+									    <input type="checkbox" class="form-check-input " id="shareableUsersCheck" >
+									    <label class="form-check-label" for="exampleCheck1" th:text="#{label.all.users.share}">Tüm kullanıcılar ile paylaş</label>
+									 </div>																																																																							
+																																																						
+								</div>
+								<div class="modal-footer">													
+									<button type="button" id="alertShare" data-not-close-id="myModalAlertAddModalNotClose" class="btn btn-primary alertShare"  data-id="" onclick="Alert.AlertShareSave()" th:text="#{label.share}">Paylaş</button>
+								</div>
+						   </form>
+							
+						</div>
+										
+					</div>
+
+					<div class="modal-footer" style="justify-content: center;">
+						<button type="button" class="btn btn-secondary" data-not-close-id="myModalAlertAddModalNotClose" data-dismiss="modal" th:text="#{label.close}">Kapat</button>
+						<button type="button" class="btn btn-primary show-map" data-not-close-id="myModalAlertAddModalNotClose" data-id="" onclick="" data-dismiss="modal" th:text="#{label.news.return.map}">Haritaya dön</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

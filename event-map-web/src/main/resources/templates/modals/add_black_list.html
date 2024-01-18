@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+
+<body>     
+
+	<div th:fragment="addBlackListModal">
+		<!-- Modal -->
+		<div class="modal fade addBlackListModal" id="addBlackListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-body">
+					<div class="modal-content">
+						<div class="modal-header header-info d-block">
+
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title"
+								th:text="#{label.add.blackList}">Blacklist Ekle</h4>
+						</div>
+						<div class="modal-body px-0 pb-0">
+														
+								<div class="img-location-time-area "></div>
+
+								<div class="modal-body">
+									<div class="container">
+										<input type="hidden" id="id" name="id">
+			
+										<div class="col-sm-12 p-2">
+											<label for="name" id="name-label" th:text="#{label.name}"></label>
+											<span style="color:red"> *</span>
+											<input type="text" name="name" id="name" class="form-control"
+												   th:placeholder="#{label.name}" aria-labelledby="full-name-label">
+										</div>		
+										<div class="col-sm-12 p-2" id="generalTagDiv">
+											<label for="tag" id="tag-label" th:text="#{label.tag}"></label>  
+											<span style="color:red"> *</span>			
+											<input type="text" name="inputTag" id="inputTag" class="form-control"
+												   th:placeholder="#{label.tag}" aria-labelledby="full-tag-label">		 					
+											<textarea cols="10" id="textareaTag" name="textareaTag" class="form-control" rows="10" data-sample-short></textarea>			
+										</div>			   
+										<div class="col-sm-12 p-2" id="generalLayerDiv">
+							                 <label th:text="#{label.layer}"></label>
+							                 <span style="color:red"> *</span>
+							                 <div class="m-select2">
+							                     <select class="form-control m-select2 m_select2_12_4"
+							                             name="layerId" id="modalLayerId"
+							                             th:attr="data-placeholder=#{label.layer}">
+							                         <option></option>
+							                         <option th:each="layer : ${layers}"
+							                                 th:value="${layer.id}"
+							                                 th:text="${layer.name}">Options</option>
+							                     </select>
+							                 </div>
+							             </div>    
+							              <div class="col-sm-12 p-2 " id="generalEventGroupDiv">
+							                 <label for="eventGroupId" th:text="#{label.eventGroups}"></label>
+							                  <span style="color:red"> *</span>
+							                 <div class="m-select2">
+							                     <select class="form-control m-select2 m_select2_12_4"
+							                             id="modalEventGroupId"
+							                             name="eventGroupId"
+							                             th:attr="data-placeholder=#{label.eventGroups}">
+							                         <option></option>
+							                         <option th:each="eventGroup : ${eventGroups}"
+							                                 th:value="${eventGroup.id}"
+							                                 th:text="${eventGroup.name}">Options</option>
+							                     </select>
+							                 </div>
+							             </div>     
+							             <div class="col-sm-12 p-2 " id="generalEventTypeDiv">
+							                 <label for="eventTypeId" th:text="#{label.eventTypes}"></label>
+							                 <div class="m-select2">
+							                     <select class="form-control m-select2 m_select2_12_4"
+							                             id="modalEventTypeId"
+							                             name="eventTypeId"
+							                             th:attr="data-placeholder=#{label.eventTypes}">
+							                         <option></option>
+							                         <option th:each="eventType : ${eventTypes}"
+							                                 th:value="${eventType.id}"
+							                                 th:text="${eventType.name}">Options</option>
+							                     </select>
+							                 </div>
+							             </div>     
+							             <div class="col-sm-12 p-2">
+											<span class="col-9" th:text="#{label.state}" style="margin-left: -15px;">Durum</span>
+											<span class="col-3 m-switch m-switch--sm switch">
+												<label>
+													<input type="checkbox"
+														   id="state"
+														   th:name="state"
+														   th:checked="true"
+														   th:value="true">
+													 <span class="slider round"></span>
+												</label>
+											</span>
+								        </div>			
+								        		
+									</div>
+						        </div>
+
+						  <div class="modal-footer">							          
+						       <button type="button" class="btn btn-secondary" data-dismiss="modal" data-type="add" data-toggle="modal" th:text="#{label.close}">Close</button>		
+							   <button type="button" id="layer-save-btn" class="btn btn-primary" th:text="#{label.save}" onclick="BlackListTable.saveBlackListModal()">Save</button>					
+						 </div>
+
+					  </div>
+				   </div>
+			   </div>
+		   </div>
+	   </div>
+   </div>
+
+</body>
+</html>

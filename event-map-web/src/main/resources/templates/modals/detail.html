@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"  
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+		lang="en"
+		
+	    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	    
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+   
+<div th:fragment="detailModal">
+			<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-body">
+				<div class="modal-content event-step">
+					<div class="modal-header header-info d-block" style="cursor: move;">
+						<a href="#" class="source" target="_blank"><i class="fas fa-external-link-alt"></i> <span th:text="#{label.news.source}"></span></a>
+						<a href="#" class="live-map show-map p-3" id="choosePictures" data-dismiss="modal" data-toggle="modal" data-type="add" data-id="choosePictures" data-target="#chooseModalPictures" onclick="Page.choosePictures(this);"><i class="fas fa-image"></i> <span th:text="#{label.compare.pictures}">Resimleri Karşılaştır</span></a>
+						<a href="#" class="live-map show-map" data-dismiss="modal" data-id="" onclick="Page.ModalShowInMapClick(this);"><i class="fas fa-map-marker-alt"></i> <span th:text="#{label.news.show.map}">Haritada Göster</span></a>
+									
+<!-- 											<h4 class="modal-title" id="myModalLabel">Modal Heading</h4> -->
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>							
+						<p class="mb-0 card-title-sub t500 ls1 text-content f-right"></p>
+						<i class="fa fa-bell fa-lg alarmIconModal" th:title="#{label.alarm}" aria-hidden="true"></i>	
+						<i class="fas fa-bookmark fa-lg lastEventChooseIcon" id="lastEventChooseIcon" aria-hidden="true"></i>	
+					</div>
+					<div class="modal-body px-0 pb-0">
+						<div class="container text-area px-4"> <!-- Modal Text Alanı -->
+							<div class="img-location-time-area ">
+<!-- 								<i class="fas fa-first-aid fa-fw fa-2x modal-text-icon mr-2"></i> -->
+								<img class="i-circled i-custom modal-text-icon" onclick="Page.EventGroupMarker(this)" data-id="" title="img title" src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMTAwcHgiIGhlaWdodD0iMTAwcHgiIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMDAgMTAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48Y2lyY2xlIGlkPSJscCIgZmlsbD0ibm9uZSIgY3g9IjQ5Ljk3OCIgY3k9IjUwLjAwOCIgcj0iNDkuOTk1Ii8+PGxpbmVhckdyYWRpZW50IGlkPSJTVkdJRF8xXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSI0OS45OTk1IiB5MT0iOC41IiB4Mj0iNDkuOTk5NSIgeTI9IjkxLjUwMDUiPjxzdG9wICBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOnllbGxvdyIvPjxzdG9wICBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOmJsYWNrIi8+PC9saW5lYXJHcmFkaWVudD48Y2lyY2xlIGZpbGw9InVybCgjU1ZHSURfMV8pIiBjeD0iNTAiIGN5PSI1MCIgcj0iNDEuNSIvPjxnPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0zNC44MjIsMjQuNThsLTQuMDQ0LDEuOTMxTDQ4Ljc1Myw0NC42TDM1LjEsNTEuOTkxbC03LjgxLTQuMjU0TDI0LjUsNDkuMDkybDYuNTI5LDcuMTQybDEuNTk2LDkuNjAxIGwyLjc5LTEuMzU1bDEuNDkxLTguNzY3bDE0LjMzLTUuOTk2bDMuMDEzLDI1LjE1OGw0LjA0NC0xLjkzMWw0Ljc4My0yOC41MjNjMi42OTktMS4yNDgsNi41OTgtMy4xNzMsOS4yNzEtNC40NzIgYzMuMzQtMS42Miw0LjE3Ny0zLjYzNSwzLjM2Ny01LjMwNGMtMC44MTEtMS42NjktMi45NjItMi4zNjItNi4zMDEtMC43NDFjLTIuNjczLDEuMjk3LTYuNTQ5LDMuMjcyLTkuMTk4LDQuNjIxTDM1LjQyOSwyNC4yNTMiLz4gPC9nPjwvc3ZnPg==">
+								<h4 class="text-time mr-2 mb-2 t500"> 11 saat önce</h4>
+								<a href="#" class="text-location t500  show-map" data-dismiss="modal" data-id="" onclick="Page.ModalShowInMapClick(this);">- 36°30′N 36°51′E</a>								
+								<p class="mb-0  t500 ls1 f-right eventGroup">Group Name</p>	
+																																																																				
+							</div>
+							
+							
+							<h4 class="card-title t500 mb-2 text-content">title</h4>
+							
+							<h4 class="card-text text-black-50 mb-2 w-100 text-content pr-2 t500">spot</h4>
+							
+							<div class="card-text-description text-black-50 mb-2 w-100 text-content pr-2 t500">description</div>
+							
+						</div>
+
+						<div class="media-area">  <!-- Modal Görsel Alanı -->
+						
+							<div class="eventDetailModalMediaArea"></div>
+						
+<!-- 							<iframe class="w-100 media" src="http://player.vimeo.com/video/99895335" height="300" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+<!-- 							<img class="media" th:src="@{'/image/1.jpg'}" alt="Card image cap"> -->
+<!-- 							<img class="media" th:src="@{'/image/1.jpg'}" alt="Card image cap"> -->
+
+						</div>
+						
+<!-- 						<video th:poster="@{/image/video/explore-poster.jpg}" preload="auto" controls style="display: block; width: 100%;"> -->
+							
+<!-- 							<source th:src='@{/image/video/explore.mp4}' type='video/mp4' /> -->
+<!-- 							Your browser does not support the video tag. -->
+<!-- 						</video>   -->
+						
+						<div class="alert-area">
+							<h4 class="mt-2 mb-3 t500 alarm" th:text="#{label.news.alarms}">Alarmlar</h4>
+							
+											
+						
+						</div>
+						
+						<div class="tags-area container">
+							<div class="widget clearfix">
+								<h4 class="mt-2 mb-3 t500" th:text="#{label.news.tags}">Etiketler</h4>
+								<div class="tagcloud">
+									<a href="#"></a>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer" style="justify-content: center;">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{label.close}">Kapat</button>
+						<button type="button" class="btn btn-primary show-map" data-id="" onclick="Page.ModalShowInMapClick(this);" data-dismiss="modal" th:text="#{label.news.return.map}">Haritaya dön</button>
+						<button type="button" class="btn btn-primary show-map" data-id="" onClick="Page.LastEventSet(this)">
+							<i class="far fa-bookmark"></i>
+							<span th:text="#{label.last.event.choose}">Son Olay Seç</span>
+						</button>
+						
+						<input sec:authorize="hasRole('ROLE_EVENT_BATCH_OPERATIONS')" data-width="80" data-height="38" id="state-toggle-button" data-toggle="toggle" class="state-toggle" type="checkbox">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

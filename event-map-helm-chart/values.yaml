@@ -1,0 +1,228 @@
+appVersion: v1
+
+Dep:
+
+  registry: 177.177.0.236:5000
+
+  Web:
+    name: event-map-web
+    image:
+      repo: event_map_web
+      tag: 1.4.30
+    command: 
+      - java
+      - -Xms1g 
+      - -Xmx2g
+      - -jar 
+      - /target/event-map-web.jar
+    containerport: 8443
+
+  Postgre:
+    name: postgres-postgis
+    image:
+      repo: postgis/postgis
+      tag: 13-3.3
+    containerport: 5432
+
+  imageCredentials:
+    enabled: false
+    secretCreated: regsecret
+    secretUsed: regsecret
+    username: registryUser
+    password: registryPass
+
+Svc:
+  Web:
+    name: event-map-web
+    port: 8443
+    target_port: 8443
+  Postgre:
+    port: 5432
+    target_port: 5432
+  type: ClusterIP
+
+PostgisNetworkName: eventmap-network
+PostgisServiceName: eventmap-postgres
+
+postgresql:
+  enabled: true
+  fullnameOverride: "eventmap-postgres"
+  image:
+    registry: "177.177.0.236:5000"
+  global:
+    auth:
+      postgresPassword: "1qaz2wsx-"
+      username: "imst"
+      password: "1qaz2wsx-"
+      database: "event_map"
+  primary:
+    initdb:
+      user: "postgres"
+      password: "1qaz2wsx-"
+
+redis:
+  enabled: true
+  image:
+    registry: "177.177.0.236:5000"
+  global:
+    redis:
+      password: "1qaz2wsx-"
+  fullnameOverride: "eventmap-redis"
+  master:
+    containerPorts:
+      redis: 6379
+  replica:
+    replicaCount: 0
+
+imageLocation: docker.io/library
+
+imagePullPolicy: Always
+replicaCount:
+  web:  1
+
+Properties:
+  Web:
+    SERVER_PORT: 8443
+    SERVER_SERVLET_CONTEXTPATH: /afad
+    BUILD_VERSION: "-base"
+    CUSTOM_SERVLET_SESSION_TIMEOUT: 30m
+    SERVER_SERVLET_SESSION_COOKIE_NAME: EventMapWebSessionId
+    APPLICATION_TITLE: AFAD | Map
+    SPRING_REDIS_HOST: eventmap-redis-master
+    SPRING_REDIS_PORT: 6379
+    SPRING_REDIS_PASSWORD: 1qaz2wsx-
+    SPRING_SESSION_STORETYPE: redis
+    SPRING_SESSION_REDIS_FLUSH_MODE: ON_SAVE
+    SPRING_SESSION_REDIS_NAMESPACE: event-map:web:session
+    EVENT_RESERVED1: Reserved 1
+    EVENT_RESERVED2: Reserved 2
+    EVENT_RESERVED3: Reserved Üç
+    EVENT_RESERVED4: Reserved 4
+    EVENT_RESERVED5: Reserved Beş
+    USING_HELM_CONFIG: true
+    SETTINGS_UPDATE_INITIAL_DELAY: 1000
+    SETTINGS_UPDATE_INTERVAL: 60000
+    COUNT_EVENTS_TIME_UPDATE_INITIAL_DELAY: 1000 
+    COUNT_EVENTS_TIME_UPDATE_INTERVAL: 1800000 #integerEnv veya int ile cözülüyor
+    COUNT_EVENT_TYPE_UPDATE_INITIAL_DELAY: 1000
+    COUNT_EVENT_TYPE_UPDATE_INTERVAL: 60000 #integerEnv veya int ile cözülüyor
+    CRONJOB_ALARM_CHECK_SIZE: 500
+    SPRING_THYMELEAF_ENCODING: UTF-8
+    SPRING_THYMELEAF_CACHE: false
+    SPRING_MESSAGES_BASENAME: i18n/messages
+    SPRING_MESSAGES_CACHEDURATION: 10
+    SPRING_MESSAGES_ENCODING: UTF-8
+    SPRING_RESOURCES_CACHE_PERIOD: 604800
+    DATATABLE_ERROR_MODE: alert
+    DATATABLE_PAGE_LENGTH: 15
+    SERVER_ERROR_WHITELABEL_ENABLED: false
+    LDAP_CONTEXT_SOURCE_URL: ldaps://winsrv1.imst.local:636
+    LDAP_CONTEXT_SOURCE_BASE: dc=imst,dc=local
+    LDAP_CONTEXT_USER_DN: cn=Administrator,cn=users,dc=imst,dc=local
+    LDAP_CONTEXT_PASSWORD: ENC(cGJD9YIudJSYUjTx4X+fqilw92nFCXK3Gw08+bWJLfyMKPRvOtkGXyUDvacLIt2v)
+    LDAP_USER_SEARCH_BASE: cn=users
+    LDAP_USER_SEARCH_FILTER: (sAMAccountName={0})
+    LDAP_USER_SEARCH_SEARCH_SUBTREE: true
+    LDAP_USER_SEARCH_RESULT_EXCEPTION: true
+    JAVAX_NET_SSL_TRUSTSTORE: /cacerts.jks
+    JAVAX_NET_SSL_TRUSTSTOREPASSWORD: ENC(ozn0zv3BcWJuCymog1HsKemj7hx2I2vu1Xvgg/Jc4/3slFB2fnaaG7vV/ovhsuoQ)
+    SAML_IDP_SERVER_NAME: winsrv1.imst.local
+    SAML_SP_SERVER_NAME: localhost
+    SAML_KEYSTORE_LOCATION: classpath:cacerts.jks
+    SAML_KEYSTORE_PASSWORD: ENC(0mepCXLYJhSMFVGY5LPjFXace213RBP0av8aWmjWtjB0nFw/S9qLTnhkQaziXS6T)
+    SAML_KEYSTORE_ALIAS: myapp
+    SAML_KEYSTORE_PRIVATEKEY_PASSWORD: ENC(0mepCXLYJhSMFVGY5LPjFXace213RBP0av8aWmjWtjB0nFw/S9qLTnhkQaziXS6T)
+    SAML_KEYSTORE_ENCRYPTION_METHOD: SHA256
+    MASTER_DATASOURCE_JDBCURL: jdbc:postgresql://eventmap-postgres:5432/event_map
+    MASTER_DATASOURCE_USERNAME: imst  
+    MASTER_DATASOURCE_PASSWORD: ENC(QCyINqUdPKfVkTo1DiYbzLVCs62W9GRDodZRdscYLDekFo0s+Ia35EawRlNMXm1x)
+    JASYPT_ENCRYPTOR_ALGORITHM: PBEWithHMACSHA512AndAES_256
+    JASYPT_ENCRYPTOR_PASSWORD: qwerty123
+    JASYPT_ENCRYPTOR_IVGENERATORCLASSNAME: org.jasypt.iv.RandomIvGenerator
+    MASTER_DATASOURCE_DRIVERCLASSNAME: org.postgresql.Driver
+    MASTER_DATASOURCE_MAXIMUMPOOLSIZE: 5
+    MASTER_DATASOURCE_MINIMUMIDLE: 2
+    MASTER_DATASOURCE_JPA_SHOWSQL: false
+    SPRING_MAIN_ALLOWBEANDEFINITIONOVERRIDING: true
+    SERVER_SSL_ENABLED: false
+    SERVER_SSL_KEYSTORETYPE: PKCS12
+    SERVER_SSL_KEYSTORE: classpath:keystore/cacerts.p12
+    SERVER_SSL_KEYSTOREPASSWORD: ENC(ozn0zv3BcWJuCymog1HsKemj7hx2I2vu1Xvgg/Jc4/3slFB2fnaaG7vV/ovhsuoQ)
+    S3SERVICEURL: https://s3.eu-north-1.amazonaws.com
+    S3ACCESSKEY: AKIAQHKF3XT2Z4AK24N3
+    S3SECRETKEY: 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
+    S3BUCKETNAME: imstbucket
+    S3REGION: eu-north-1
+    KEYCLOAK_AUTHSERVERURL: http://keycloak-eventmap:80
+    KEYCLOAK_REALM: myrealm
+    KEYCLOAK_RESOURCE: event-map-web
+    KEYCLOAK_PUBLICCLIENT: false
+    #KEYCLOAK_USE_RESOURCE_ROLE_MAPPINGS: true
+    KEYCLOAK_CREDENTIALS_SECRET: eLrpP7u2OPIH9yNT87lYNUOeXr1unsz4
+    SPRING_MAIN_ALLOW_CIRCULAR_REFERENCES: true
+    LOGGING_LEVEL_ORG_KEYCLOAK: INFO
+    LOGGING_LEVEL_COM_IMST_EVENT_MAP: WARN
+    LOGGING_LEVEL_COM_ZAXXER_HIKARI_HIKARICONFIG: WARN
+    LOGGING_LEVEL_COM_ZAXXER_HIKARI_POOL: WARN
+    LOGGING_LEVEL_ORG_SPRINGFRAMEWORK: WARN
+    LOGGING_LEVEL_ORG_HIBERNATE: ERROR
+    LOGGING_LEVEL_COM_GITHUB: WARN
+    LOGGING_LEVEL_ORG_THYMELEAF: WARN
+    LOGGING_LEVEL_ORG_APACHE_HTTP: WARN
+    LOGGING_LEVEL_IO_LETTUCE: WARN
+    LOGGING_LEVEL_COM_ULISESBOCCHIO_JASYPTSPRINGBOOT: WARN
+    LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_BOOT_CONTEXT_WEB_ERRORPAGEFILTER: OFF
+
+Ingress:
+  enabled: true
+  Hostname: test.eventmap.com
+  AdminPath: /admin
+  WebPath: /web
+  CronjobPath: /cronjob
+
+
+Config:
+  Web:
+    envFrom:
+    - configMapRef:
+        name: config-web
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+livenessProbe:
+  enabled: false
+  initialDelaySeconds: 40 #Default 0 
+  periodSeconds: 15 #Default 10 
+  timeoutSeconds: 5 #Default 1 
+  failureThreshold: 6 #Default 3
+  successThreshold: 1 #Default 1 
+
+readinessProbe:
+  enabled: false
+  initialDelaySeconds: 20
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 10
+  successThreshold: 1
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""

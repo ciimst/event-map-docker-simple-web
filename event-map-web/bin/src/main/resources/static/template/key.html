@@ -1,0 +1,66 @@
+<div id="legend" class="scrotabs">
+	<div id="layerName" class="new about abouttext" style="margin-top: 10px; padding-top: 10px;">${eventGroupList[0].layerName}</div>
+	<div class="legendrow">
+		<span class="title">${lang.props["label.key.sides"]}</span>
+	</div>
+	<div id="eventGroup">
+		{{each(i,eventGroup) eventGroupList}}                
+
+		<div class="legendrow">
+			<img src='${SvgIcon.GenerateBase64Icon("", eventGroup.color)}'>
+			<span class="shw">${eventGroup.name}</span>
+		</div>
+		{{/each}}
+
+	</div>
+	<div class="legendrow">
+		<span class="title">${lang.props["label.key.areas"]}</span>
+	</div>
+	<div id="mapAreaGroup">
+		{{each(i,mapAreaGroup) mapAreaGroupList}}
+		<div class="legendrow" style="display: inline-flex;">
+			<div class="territory" style="background: ${mapAreaGroup.color}; border: 2px solid ${mapAreaGroup.color}"></div>
+			<span>${mapAreaGroup.name}</span>			
+		</div>
+		{{/each}}
+	</div>
+
+
+	<div class="legendrow">
+		<span class="title">${lang.props["label.key.icons"]}</span>
+	</div>
+	<div id="eventType">
+		{{each(i, eventType) eventTypeList}}
+		
+			{{if i%2}}
+			<div class="legendrow iconsrow">
+				<div class="legend_filter" data-cid="${eventType.id}">
+					<img src="${SvgIcon.GenerateBase64Icon(eventType.image,"#1e64c6")}" data-src="${eventType.code}">
+					<span class="shw">${lang.props["icons."+eventType.code]}</span>
+				</div>
+
+				
+				{{if i+1 < eventTypeList.length}}
+				<div class="legend_filter" data-cid="${eventTypeList[i+1].id}">
+					<img src="${SvgIcon.GenerateBase64Icon(eventTypeList[i+1].image,"#1e64c6")}" data-src="${eventTypeList[i+1].code}">
+					{{if lang.props["icons."+eventTypeList[i+1].code] }}
+					
+					
+					<span class="shw">${lang.props["icons."+eventTypeList[i+1].code]}</span>
+					{{else}}
+					
+					
+					<span class="shw">${eventTypeList[i+1].name}</span>
+					
+					
+					{{/if}}
+				</div>
+				{{/if}}
+			</div>
+			{{/if}}
+				
+		{{/each}}
+	</div>
+	
+	
+</div>

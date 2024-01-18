@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:th="https://www.thymeleaf.org" 
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+		layout:decorator="~{layouts/main_layout}">
+		
+    <head>
+        <title>Spring Security Example</title>
+    </head>
+    <body layout:fragment="content">
+        <!-- Page Title
+		============================================= -->
+
+				<!-- Content
+		============================================= -->
+		<section id="content">
+
+			<div class="content-wrap">
+
+				<div class="container clearfix">
+
+					<div class="col_half nobottommargin">
+						<div class="error404 center">404</div>
+					</div>
+
+					<div class="col_half nobottommargin col_last ">
+
+						<div class="nobottomborder" style="margin-top: 120px">
+							<h4></h4>
+						</div>
+
+						<form action="#" method="get" class="nobottommargin">
+							<div class="input-group input-group-lg">
+								<label th:text="#{label.no.permission.new.user}">Bu sayfayı görüntüleme yetkiniz bulunmamaktadır. </label>
+<!-- 								<div class="input-group-append"> -->
+<!-- 									<a th:href="@{/}" class="btn btn-danger" type="button">Ana Sayfa</a> -->
+<!-- 								</div> -->
+							</div>
+						</form>
+
+						
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</section><!-- #content end -->
+    </body>
+</html>

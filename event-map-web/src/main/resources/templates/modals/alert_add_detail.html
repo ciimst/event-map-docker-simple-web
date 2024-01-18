@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"  
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+		lang="en"
+		
+	    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	    
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+   
+<div th:fragment="detailModalAlertAdd">
+			<!-- Modal -->
+	<div class="modal fade" id="myModalAlertAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-body">
+				<div class="modal-content">
+					<div class="modal-header header-info d-block">
+						
+<!-- 											<h4 class="modal-title" id="myModalLabel">Modal Heading</h4> -->
+
+						<button type="button" data-not-close-id="myModalAlertAddModalNotClose" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>	
+						<i class="fa fa-bell fa-2x alarmIconAlertModal" aria-hidden="true"></i>							
+						<h4 class="mr-2 mb-2 t500" th:text="#{label.alert.criterion.add}">Alarm Kriter Ekleme</h4>
+						
+						
+					</div>
+					<div class="modal-body px-0 pb-0">
+						<div class="container text-area px-4"> <!-- Modal Text Alanı -->
+							<div class="img-location-time-area ">
+																																																																																																				
+							</div>							
+							
+							<form id="alertAddForm" name="contact" role="form">
+								<div class="modal-body">
+									
+									<div class="form-group">
+										<label for="name" th:text="#{label.alert.name}">Alarm Adı</label>
+										<input type="text"  id="addAlertModalAlertName" name="name" class="form-control alertName" required="required">
+										<div class="help-block with-errors"></div>
+									</div>																	    								
+									
+									<div class="form-group">
+										<label for="name" th:text="#{label.text.search}">Metin Arama</label>
+										<input type="text" name="query" class="form-control alertQuery">
+									</div>
+									
+									<div class="form-group">
+									  <label for="sela1" th:text="#{label.eventType}">Olay Türü</label>
+									  <select class="form-control m-select2 m_select2_12_4 addAlarmEventType" id="addAlarmEventType" name="eventTypeId">
+											<option th:text="#{label.search.event.type}" value="0"></option>
+									  </select>
+									</div>
+									
+									<div class="form-group">
+									  <label for="sela2" th:text="#{label.eventGroup}">Olay Grupları</label>
+									  
+									  	<select class="form-control m-select2 m_select2_12_4 addAlarmEventGroup" id="addAlarmEventGroup" name="eventGroupId">
+											  <option th:text="#{label.eventGroup}" value="0"></option>
+										</select>
+									</div>
+																	
+									<div class="form-group">
+										<label for="color" id="color-label" th:text="#{label.alert.color}"></label>
+										<span class="color-picker form-control"> <input
+											type="color" name="color" value="#3388ff" id="colorPicker">
+											<span id="colorText" name="color">#3388ff</span>
+
+										</span>
+									</div>
+									
+									<div class="form-group">
+										<label for="name" th:text="#{label.alert.reserved.id}">Ayrılmış Kimlik(ID)</label>
+										<input type="text" name="reservedId" class="form-control reservedId">
+									</div>
+									<div class="form-group">
+										<label for="name" th:text="#{label.alert.reserved.key}">Ayrılmış Anahtar</label>
+										<input type="text" name="reservedKey" class="form-control reservedKey">
+									</div>
+									<div class="form-group">
+										<label for="name" th:text="#{label.alert.reserved.type}">Ayrılmış Tür</label>
+										<input type="text" name="reservedType" class="form-control reservedType">
+									</div>
+									<div class="form-group">
+										<label for="name" th:text="#{label.alert.reserved.link}">Ayrılmış Bağlantı</label>
+										<input type="text" name="reservedLink" class="form-control reservedLink">
+									</div>																																													
+																																																						
+								</div>
+								<div class="modal-footer">													
+									<button type="button" id="alertAdd" class="btn btn-primary alertEdit"  data-id="" th:text="#{label.save}" onClick = "">Kaydet</button>
+								</div>
+						   </form>
+							
+						</div>
+										
+					</div>
+
+					<div class="modal-footer" style="justify-content: center;">
+						<button type="button" data-not-close-id="myModalAlertAddModalNotClose" class="btn btn-secondary" data-dismiss="modal" th:text="#{label.close}">Kapat</button>
+						<button type="button" data-not-close-id="myModalAlertAddModalNotClose" class="btn btn-primary show-map" data-id="" onclick="" data-dismiss="modal" th:text="#{label.news.return.map}">Haritaya dön</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

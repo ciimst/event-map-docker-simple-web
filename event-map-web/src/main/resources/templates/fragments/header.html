@@ -1,0 +1,121 @@
+<!DOCTYPE html >
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+
+<body>
+
+    <!-- BEGIN: Header -->
+	<header  id="header" th:fragment="header" class="static-sticky transparent-header clearfix header2 sticky-header">
+
+		<div id="header-wrap" class="header2">
+
+			<div class="container clearfix p-0" style="max-width:100%">
+
+<!-- 				<div id="primary-menu-trigger"><i class="icon-reorder"></i></div> -->
+
+				<!-- Logo
+				============================================= -->
+				<div id="logo" class="mr-0">
+					<a th:href="@{/}" class="standard-logo"><img th:src="@{'/image/static/' + ${T(com.imst.event.map.web.utils.SettingsUtil).getWebLogoImage()}}" alt="Canvas Logo" style="padding: 18px;" class="header2"></a>
+					<a th:href="@{/}" class="retina-logo"><img th:src="@{'/image/static/' + ${T(com.imst.event.map.web.utils.SettingsUtil).getWebLogoImage()}}" alt="Canvas Logo" style="padding: 18px;" class="header2"></a>
+				</div><!-- #logo end -->
+				<div class="date-box" id="navtime" th:text="${navTime}"></div>
+				<!-- Primary Navigation
+				============================================= -->
+				<nav id="primary-menu" class="style-2 with-arrows clearfix">
+
+					<ul id="navbarUl" class="left d-lg-block layerList" style="border-right: 1px solid #EEE;">
+<!-- 						<li><a th:href="@{/about}">Hakkımızda</a></li> -->
+<!-- 						<li><a th:href="@{/}" id="countryLayerName" class="country active"></a></li> -->
+<!-- 						<li><a th:href="@{/about}" class="country">ABD</a></li> -->
+<!-- 						<li><a href="#" class="country">Rusya</a></li> -->
+<!-- 						<li><a href="#" ><i class="fas fa-location-arrow" style="font-size: 21px!important;"></i> Bölge Seçimi</a></li> -->
+						
+						
+<!-- 						<li class="nav-item dropdown"> -->
+<!-- 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+<!-- 								Dropdown -->
+<!-- 							</a> -->
+<!-- 							<div class="dropdown-menu" aria-labelledby="navbarDropdown"> -->
+<!-- 								<a class="dropdown-item" href="#">Action</a> -->
+<!-- 								<a class="dropdown-item" href="#">Another action</a> -->
+<!--  								<div class="dropdown-divider"></div> -->
+<!--  								<a class="dropdown-item" href="#">Something else here</a> -->
+<!-- 							</div> -->
+<!-- 						</li>  -->
+					</ul>
+				<!--  <select style="visibility: hidden;" class="countryLayerNameSelect custom-select">
+				<option>Layer Seçiniz</option>
+				</select>  -->
+					
+
+					<ul class="right" style="float: right;" id="primaryRightMenuUl">
+					
+						<li class="d-md-block d-none" id="primaryRightMenuStepBars"><a href="#" class="menu-with-logo menu-sidebar step-bars" name="menu" data-t="off"><i class="fas fa-bars fa-fw"></i></a></li>
+						<li class="active d-md-block d-none"><a href="#" class="menu-with-logo menu-sidebar step-live" name="news-live"><i class="far fa-file-alt fa-fw"></i><span class="hidden-text" th:text="#{label.news}">Canlı Akış</span></a></li>
+						<li class="d-md-block d-none"><a th:href="@{'/event-table/' + ${layerId}}"  class="menu-with-logo step-event-table" name="event-table"><i class="icon-line-layout"></i><span class="hidden-text" th:text="#{label.live.table}">Canlı Akış Tablo</span></a></li>
+						<li class="d-md-block d-none"><a th:href="@{'/timeDimension/' + ${layerId}}"  class="menu-with-logo step-timedimension" name="timedimension"><i class="fas fa-play"></i><span id = "timeDimentionPlayİsActive"class="hidden-text" th:text="#{label.timeslider}">TimeDimention</span></a></li>
+						<li class="d-md-block d-none"><a th:href="@{'/heatmap/' + ${layerId}}"  class="menu-with-logo step-heat" name="heatmap"><i class="fas fa-burn"></i><span id = "heatmapIsActive"class="hidden-text" th:text="#{label.heatmap}">Isı Haritası</span></a></li>
+						
+
+						
+
+						<li class="d-md-block d-none"><a th:href="@{'/event-table-view/' + ${layerId}}"  class="menu-with-logo step-event-table-view" name="event-table-view"><i class="fas fa-table"></i><span class="hidden-text" th:text="#{label.table}">Tablo Görünümü</span></a></li>					
+<!-- 						<li class="d-md-block d-none"><a href="#" class="menu-with-logo menu-sidebar step-alarm" name="alarm"><i class="fa fa-bell"></i><span class="hidden-text" th:text="#{label.alarm}">Alarm</span></a></li> -->
+<!-- 						<li class="d-md-block d-none"><a href="#" class="menu-with-logo menu-sidebar step-language" name="language"><i class="fas fa-globe-europe fa-fw"></i><span class="hidden-text" th:text="#{label.language}">Dil</span></a></li> -->
+					
+
+					
+						<li class="d-md-block d-none"><a href="#" class="menu-with-logo menu-sidebar step-time" name="time"><i class="far fa-clock fa-fw"></i><span class="hidden-text" th:text="#{label.timeline}">Zaman</span></a></li>
+<!-- 						<li class="d-md-block d-none"><a href="#" class="menu-with-logo menu-sidebar step-key" name="key"><i class="far fa-compass fa-fw"></i><span class="hidden-text" th:text="#{label.key}">Anahtar</span></a></li> -->
+<!-- 						<li class="d-md-block d-none"><a th:href="'/black-list'" class="menu-with-logo menu-sidebar step-blackList" name="blackList"><i class="fa fa-ban"></i><span class="hidden-text" th:text="#{label.blackList}">Black List</span></a></li>  -->
+<!-- 						<li class="d-md-block d-none"><a th:href="'/settings/' + ${layerId} + '/AbcdGroup'" class="menu-with-logo" name="settings"><i class="fa fa-cog"></i><span class="hidden-text" th:text="#{label.settings}">Ayarlar</span></a></li>  -->
+				 <!--   <li class="d-md-block d-none"><a th:href="'/settings/' + ${layerId}" class="menu-with-logo  menu-sidebar step-settings" name="settings"><i class="fas fa-map"></i><span class="hidden-text" th:text="#{label.settings}">Ayarlar</span></a></li> -->
+						
+<!-- 						<li th:if="${T(com.imst.event.map.web.utils.SettingsUtil).getOptionalButtonValue()}"><a href="/saml/logout" class="menu-with-logo logout" ><i class="fas fa-sign-in-alt fa-fw"></i><span class="hidden-text" th:text="#{label.logout}">Çıkış</span></a></li> -->
+						
+						
+						<li class="menu-bars d-none">
+							<a href="#" id="left-side-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="menu-with-logo"><i class="fas fa-bars fa-fw"></i></a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="left-side-menu">
+								<a class="dropdown-item" th:href="@{/about}">Hakkımızda</a>
+								<a class="dropdown-item active" th:href="@{/}">Türkiye</a>
+								<a class="dropdown-item" href="#">ABD</a>
+								<a class="dropdown-item" href="#">Rusya</a>
+								<a class="dropdown-item" href="#">Bölge Seçimi</a>
+						    </div>
+						</li>
+						
+						
+				<li class="nav-item dropdown d-md-block d-none" id="navbarDropdown" style="top: 5px">
+					<a class="nav-link   menu-with-logo" href="#" data-bs-toggle="dropdown" > <i class="fas fa-list fa-lg" ></i> <span th:text="#{label.more}"></span></a>
+					<!-- 						  	<a th:href="'/settings/' + ${layerId} + '/AbcdGroup'" class="nav-link  dropdown-toggle menu-with-logo" ata-bs-toggle="dropdown" name="settings"><i class="fa fa-cog"></i><span class="hidden-text" th:text="#{label.settings}">Ayarlar</span></a> -->
+					 <ul class="dropdown-menu rightMenuDropDown dropdown-menu-start" role="menu">
+						<li class=""><a th:href="@{'/settings/' + ${layerId} + '/ExcelYönetim'}" class="dropdown-item menu-sidebar step-settings" name="settings"><i class="fa fa-cog rightMenuIcon"></i><span class="hidden-text rightMenuSpan" th:text="#{label.settings}">Ayarlar</span></a></li>
+						<li class=""><a href="#" class="dropdown-item menu-sidebar step-alarm" name="alarm"><i class="fa fa-bell rightMenuIcon"></i><span class="hidden-text rightMenuSpan" th:text="#{label.alarm}">Alarm</span></a></li>
+						<li class=""><a href="#" class="dropdown-item menu-sidebar step-language" name="language"><i class="fas fa-globe-europe fa-fw rightMenuIcon"></i><span class="hidden-text rightMenuSpan" th:text="#{label.language}">Dil</span></a></li>
+						<li class=""><a href="#" class="dropdown-item menu-sidebar step-key" name="key"><i class="far fa-compass fa-fw rightMenuIcon"></i><span class="hidden-text rightMenuSpan" th:text="#{label.key}">Anahtar</span></a></li>
+						<li class=""><a th:href="@{'/black-list/' + ${layerId}}" class="dropdown-item menu-sidebar step-blackList" name="blackList"><i class="fa fa-ban rightMenuIcon"></i><span class="hidden-text rightMenuSpan" th:text="#{label.blackList}">Black List</span></a></li> 
+						<li th:if="${T(com.imst.event.map.web.utils.SettingsUtil).getOptionalButtonValue()}"><a th:href="@{/logout}" class=" dropdown-item logout" ><i class="fas fa-sign-in-alt fa-fw rightMenuIcon"></i><span class="hidden-text rightMenuSpan" th:text="#{label.logout}">Çıkış</span></a></li>
+					  
+					 </ul>
+				</li>
+
+		</ul>				
+
+				</nav><!-- #primary-menu end -->
+
+			</div>
+
+		</div>
+
+	</header>
+	<!-- END: Header -->
+
+</body>
+</html>

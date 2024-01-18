@@ -1,0 +1,43 @@
+						
+						
+<!-- 						{{each(i, menu) menuList}}                 -->
+							
+<!-- 							{{if 1 >= i }} -->
+							
+<!-- 								<li><a  -->
+								
+
+<!-- 								href="{{if TimeDimension.timeDimensionMode == true}}/timeDimension/${menu.layerGuid}{{/if}} {{if HeatMap.isHeatmap == true}}/heatmap/${menu.layerGuid}{{/if}} {{if TimeDimension.timeDimensionMode != true && HeatMap.isHeatmap != true}}/region/${menu.layerGuid}{{/if}}"title="${menu.titleLayerName}" {{if menu.layerGuid == activeLayerId }} class="active" {{/if}} >${menu.layerName}</a></li> -->
+							
+<!-- 							{{else}}   -->
+<!-- 								{{if menu.layerGuid == activeLayerId }}  -->
+<!-- 									${( $data.dropdownActiveClass = 'active' ),''}								 -->
+<!-- 								{{/if}} -->
+<!-- 							{{/if}} -->
+							
+
+<!--        					{{/each}}  -->
+						
+						
+<!-- 						{{if menuList.length > -1 }} -->
+						<li class="nav-item dropdown">
+							<a class="layer-name-dropdown-toogle nav-link dropdown-toggle ${dropdownActiveClass}"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								${lang.props["label.regions"]}
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+								{{each(i, menu) menuList}}                
+<!-- 									{{if i > -1 }} -->
+
+										${( $data.isLayerActive = '' ),''}
+										{{if menu.layerGuid == activeLayerId }}
+											${( $data.isLayerActive = 'active' ),''}
+										{{/if}}
+										<a class="layer-dropdown-item dropdown-item ${isLayerActive}"  title="${menu.titleLayerName}" href="{{if TimeDimension.timeDimensionMode == true}}${contextPath}timeDimension/${menu.layerGuid}{{/if}} {{if HeatMap.isHeatmap == true}}${contextPath}heatmap/${menu.layerGuid}{{/if}} {{if Main.eventTableMode == true}}${contextPath}event-table/${menu.layerGuid}{{/if}} {{if Main.eventTableViewMode == true}}${contextPath}event-table-view/${menu.layerGuid}{{/if}}  {{if TimeDimension.timeDimensionMode != true && HeatMap.isHeatmap != true && Main.eventTableMode != true && Main.eventTableViewMode != true}}${contextPath}region/${menu.layerGuid}{{/if}}"  >${menu.layerName}</a>
+
+<!-- 									{{/if}} -->
+	        					{{/each}}       
+							</div>
+						</li> 
+<!-- 						{{/if}} -->
+

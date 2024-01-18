@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layouts/main_layout}">
+
+<head>
+    <title>Table Child Row Deneme</title>
+    
+    <style type="text/css">
+	    .toggle-handle {
+		    background: #fff;
+		    border-color: #ebedf2;
+		}
+		
+		.toggle-group > span{
+			
+			font-size: 10px;
+			text-transform: none;
+		}
+
+    </style>
+</head>
+
+<th:block layout:fragment="link">
+
+	<link rel="stylesheet" th:href="@{/css/bootstrap-toggle.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/timepicker.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/datatables/jquery.dataTables.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/webjars/leaflet/1.6.0/leaflet.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/leaflet/leaflet.draw.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/select2.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/wijmo.min.css}" type="text/css"/>
+    <link th:href="@{/css/profile.css?v=} + ${build_version}" rel="stylesheet" type="text/css" /> 
+    <link rel="stylesheet" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/datepicker.css}" type="text/css"/>
+     
+
+<!--     <link rel="stylesheet" th:href="@{/css/sweetalert.css}" type="text/css"/> -->
+    <link rel="stylesheet" th:href="@{/css/beforeafter.min.css}"/>
+    
+    <style type="text/css">
+		
+		.multiSelectSearchColumn .select2-container .select2-selection {
+    		max-height: 60px;
+    		overflow-y: scroll;
+    		overflow-x: hidden;
+    		margin-top: 0px !important;
+		} 
+		
+		.select2-container .select2-selection {
+			max-height: 60px;
+		}
+		
+		.selectSearch .select2-container {
+ 			margin-top: -5px; 
+			font-weight: 400;
+			color: #495057;
+		}
+		
+		.select2-container .select2-selection {
+			min-height: calc(1.5em + 0.75rem + 2px);
+			font-weight: 400;
+ 		    font-size: 1rem;	 
+		}  		
+    	
+    	.select2-container .select2-search--inline .select2-search__field {
+    		height:25px !important;
+    		margin-top: 8px !important;
+    	}
+    	
+    	
+    	::placeholder {
+ 			color: #999 !important;
+		}
+    	
+    </style>
+    
+</th:block>
+
+<body layout:fragment="content">
+	
+	<section id="content" class="map-d eventTableSection">
+	    <div class="container-fluid clearfix px-0">
+	
+	        <div th:replace="fragments/sidebar :: sidebar">Sidebar</div>
+	
+	    </div>
+	</section>
+
+<div class="container-fullwidth mt-2 ">
+	<div class="row d-flex justify-content-center">
+
+    	<div class="col-md-12">
+
+        	<div class="py-2 advanced-search" style="padding-bottom: 0px !important;">
+
+
+				<form id="searchForm" class="advanced-search m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed p-1" style="display: none; margin-bottom:0px !important;">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group" id="filter_col0" data-column="title">
+                            <label th:text="#{label.title}"></label>
+                            <input type="text" name="title" class="form-control column_filter searchText"  id="col5_filter" th:placeholder="#{label.title}">
+                        </div>
+                    </div>
+                 
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group" id="filter_col0" data-column="spot">
+                            <label th:text="#{label.event.spot}"></label>
+                            <input type="text" name="spot" class="form-control column_filter searchText"  id="col5_filter" th:placeholder="#{label.event.spot}">
+                        </div>
+                    </div>
+                 
+                 
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group" id="filter_col0" data-column="description">
+                            <label th:text="#{label.event.description}"></label>
+                            <input type="text" name="description" class="form-control column_filter searchText"  id="col5_filter" th:placeholder="#{label.event.description}">
+                        </div>
+                    </div>
+                 
+                    
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group" id="filter_col0" data-column="city">
+                            <label th:text="#{label.event.city}"></label>
+                            <input type="text" name="city" class="form-control column_filter searchText"  id="col8_filter" th:placeholder="#{label.event.city}">
+                        </div>
+               	    </div>
+                  
+                 
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group" id="filter_col2" data-column="country">
+                            <label th:text="#{label.event.country}"></label>
+                            <input type="text" name="country" class="form-control column_filter searchText"  id="col9_filter" th:placeholder="#{label.event.country}">
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <label for="eventGroupId" th:text="#{label.EventGroups}">Olay Grupları</label>
+                        <div class="m-select2" data-column="eventGroupId">
+                            <select class="form-control m-select2 m_select2_12_4 select2"
+                                    id="eventGroupId"
+                                    name="eventGroupName"
+                                    th:attr="data-placeholder=#{label.eventGroup}">
+                                <option></option>
+                                <option th:each="eventGroup : ${eventGroups}"
+                                        th:value="${eventGroup.id}"
+                                        th:text="${eventGroup.name}">Options</option>
+                            </select>
+                        </div>
+                     </div>
+                                                        
+                     <div class="col-lg-3 col-md-4 col-sm-12">
+                        <label for="eventTypeId" th:text="#{label.EventTypes}"> Olay Türleri</label>
+                        <div class="m-select2 eventTypeSearch multiSelectSearchColumn" data-column="eventTypeId">
+                            <select multiple="multiple" class="form-control m-select2 m_select2_12_4 select2"
+                                    id="eventTypeId"
+                                    name="eventTypeId"
+                                    th:attr="data-placeholder=#{label.eventType}">
+                                <option th:each="eventType : ${eventTypes}"
+                                        th:value="${eventType.id}"
+                                        th:text="${eventType.name}">Options</option>
+                            </select>
+                        </div>
+                     </div>
+                     
+                     <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group" id="filter_col2" data-column="blackListTag">
+                            <label for="search-blackListTag" th:text="#{label.event.black.list.tag}"></label>
+                            <input type="text" name="blackListTag" class="form-control column_filter searchText"  id="col9_filter" th:placeholder="#{label.event.black.list.tag}">
+                        </div>
+                     </div>
+	
+        		    <div class="col-lg-3 col-md-4 col-sm-12">
+			            <div class="form-group">
+			                <div class="input-group date" id="startDate" data-target-input="nearest">
+			                <label for="country" th:text="#{label.startDate}" style="width: 100%">Ülke</label>
+			                    <input type="text" name="startDate" class="form-control datetimepicker-input" data-target="#startDate" placeholder="DD.MM.YYYY HH:mm:ss"/>
+			                    <div class="input-group-append" data-target="#startDate" data-toggle="datetimepicker">
+			                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+			                    </div>
+			                </div>
+			            </div>
+        			</div>
+        			
+        		    <div class="col-lg-3 col-md-4 col-sm-12">
+			            <div class="form-group">
+			                <div class="input-group date" id="endDate" data-target-input="nearest">
+			                <label for="country" th:text="#{label.endDate}" style="width: 100%">Ülke</label>
+			                    <input type="text" name="endDate" class="form-control datetimepicker-input" data-target="#endDate" placeholder="DD.MM.YYYY HH:mm:ss"/>
+			                    <div class="input-group-append" data-target="#endDate" data-toggle="datetimepicker">
+			                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+			                    </div>
+			                </div>
+			            </div>
+        			</div>
+        			
+        			
+        			
+                    
+                    <div class="col-lg-3 col-md-4 col-sm-12" sec:authorize="hasRole('ROLE_EVENT_STATE_VIEW')">
+                         <label th:text="#{label.state}"></label>
+                         <div class="m-select2" data-column="state">
+                             <select class="form-control m-select2 m_select2_12_4"
+                             		 id="state"
+                                     name="state"
+                                     th:attr="data-placeholder=#{label.state}">
+                                 <option></option>
+                                 <option th:text="#{label.active}" value="true"></option>
+                                 <option th:text="#{label.passive}" value="false"></option>
+                             </select>
+                         </div>
+                     </div>
+                                 
+                     	<div class="form-group m-form__group row justify-content-end" style="margin-top: 30px; margin-left: 0px;">
+                                                      
+                                <div class="col-12">		
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <button type="button" id="search-button" class="btn btn-primary m-btn m-btn--icon m-btn--wide button-r searchButton ">
+											<span><i class="la la-fw la-search"></i><span th:text="#{label.search}">Arama</span></span>
+                                        </button>
+                                    </div>
+                                </div>                                                              
+
+                            </div>
+                            
+
+                </div>
+              
+                </form>
+                
+                <div class="row justify-content-end" style="margin-bottom:6px;">
+           			<div style="margin-left:10px;">		
+                    	<div class="m-input-icon m-input-icon--right">
+                            <button type="button" onclick="EventTable.ClearFilters()" class="btn btn-danger m-btn m-btn--icon m-btn--wide button-r">
+								<span><i class="la la-fw la-search"></i><span>Temizle</span></span>
+                			</button>
+                		</div>
+                	</div> 
+                	
+           			<div style="margin-left:10px;">	
+						<div class="dropdowm float-right">
+			 			<button class="btn btn-secondary dropdown-toggle event-group-operation" type="button" th:text="#{label.transactions}" id="detailedSearchEventGroupOperation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    	Toplu İşlemler
+				  		</button>
+				  			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				    			<a class="dropdown-item" onclick="EventTable.ExcelFileDownload()" href="#" th:text="#{label.export.to.excel}">Excel Export</a>
+				    			<a class="dropdown-item user-settings-operation" sec:authorize="hasRole('ROLE_EVENT_BATCH_OPERATIONS')" data-toggle="modal"  onClick="EventTable.BacthStateChangedOpenModal()" data-target="#stateChangeBatchOperations" href="#" th:text="#{label.batch.state.change}">Toplu Aktif Pasif</a>									    
+				  			</div>
+						</div>
+					</div>
+					
+					<div style="margin-left:10px;">		
+	                	<div class="m-input-icon m-input-icon--right float-right">
+	                    	<button type="button" id="close-button" class="btn btn-secondary m-btn m-btn--icon m-btn--wide button-r ">
+							<span><i class="stbuttontext fa fa-angle-down"></i><span ></span></span>
+	                        </button>
+	                    </div>
+	           		</div>
+				</div>
+<!--                 <div class="text-center"> -->
+<!--                 	<a href="#" class="btn btn-light-primary px-6 font-weight-bold searchButton">Ara</a> -->
+<!--                 </div> -->
+                
+				
+        	</div>
+    	</div>
+	</div>
+</div>
+
+        
+
+
+
+<div id="tableContainer" class="container-fullwidth mt-2 overflow-scroll " style="padding-bottom: 300px; ">
+    <table id="eventTable" class="display" style="width:100%; border-top: 1px solid rgba(0, 0, 0, 0.125);    padding-top: 10px;">
+        <thead>
+        <tr style="vertical-align:text-top;">
+        	<th></th>
+           	<th class="selectSearch multiSelectSearchColumn" style="min-width:200px; max-width:400px; max-height:100px;" th:text="#{label.event.type}" data-search="eventTypeId">Olay Türü</th>
+           	<th class="alertSearch" th:text="#{label.alarm}" data-search="alert">Alarm</th>
+			<th th:text="#{label.title}" style="min-width:200px;" data-search="title">Başlık</th>
+           	<th th:text="#{label.event.spot}" style="min-width:300px;" data-search="spot">Kısa açıklama</th>
+           	<th th:text="#{label.event.description}" data-search="description">Başlık</th>
+           	
+           	<th class="nonSearchable" th:text="#{label.coordinate}">Koordinat</th>
+           	<th class="datepickerSearch" th:text="#{label.event.date}" style="min-width:120px;">Olay Tarihi</th>
+           	<th class="datepickerSearch" th:text="#{label.event.date}">Olay Tarihi</th>
+           	<th class="datepickerSearch" th:text="#{label.event.date}">Olay Tarihi</th>
+           	<th th:text="#{label.event.city}" style="min-width:80px;" data-search="city">Şehir</th>
+           	<th th:text="#{label.event.country}" style="min-width:80px;" data-search="country">Ülke</th>
+           	<th class="selectSearch" style="min-width:160px;" th:text="#{label.event.group}" data-search="eventGroupId">Olay Grubu</th>
+           	<th th:text="#{label.event.black.list.tag}" style="min-width:120px;" data-search="blackListTag">Olay Grubu</th>
+           	<th th:text="${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved1') ) } : ${ @environment.getProperty('event.reserved1') } " style="min-width:120px;" data-search="reserved1">Reserved 1</th>
+           	<th th:text="${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved2') ) } : ${ @environment.getProperty('event.reserved2') } " style="min-width:120px;" data-search="reserved2">Reserved 2</th>      	
+           	<th th:text="${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved3') ) } : ${ @environment.getProperty('event.reserved3') } " style="min-width:120px;" data-search="reserved3">Reserved 3</th>          	      	
+           	<th th:text="${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved4') ) } : ${ @environment.getProperty('event.reserved4') } " style="min-width:120px;" data-search="reserved4">Reserved 4</th>
+           	<th th:text="${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved5') ) } : ${ @environment.getProperty('event.reserved5') } " style="min-width:120px;" data-search="reserved5">Reserved 5</th>
+           	<th class="selectSearch" style="min-width:90px;" th:text="#{label.state}" id="eventBacthOperationsState" th:data-has-role="${hasEventBatchOperationRole}" data-search="state">Durum</th>
+           	
+        </tr>
+        </thead>
+    </table>
+</div>
+<div id="mapContainer" class="w-100 mt-0 p-0" style="display: none; position: fixed; bottom: 0px; height: 250px; background-color: white;box-shadow: 20px 20px 20px 20px grey;">
+<!--     <div style="background-color: #cdd7db; text-align: right;"> -->
+        <button id="btnCloseMap" type="button" class="btn btn-sm btn-danger mr-1 my-1" style=" position: absolute; z-index: 1000; right: 0; top: -45px;">
+            Haritayı Kapat [X]
+        </button>
+<!--     </div> -->
+    <div id="map" class="w-100 mw-100" style="height: 250px;">
+    </div>
+</div>
+
+<div class="page-transition-wrap" id="timeDimensionSpinner" style="display: none">
+    <div class="css3-spinner">
+        <div class="css3-spinner-bounce1"></div>
+        <div class="css3-spinner-bounce2"></div>
+        <div class="css3-spinner-bounce3"></div>
+    </div>
+</div>
+</body>
+
+<th:block layout:fragment="script">
+
+    <script type="text/javascript" th:src="@{/js/datatables/jquery.dataTables.min.js}"></script>
+        
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var paramLayerId = [[${layerId}]];
+        paramTimeLineStartDate = [[${timeLineStartDate}]];
+        var TimeDimension = {}
+        TimeDimension.timeDimensionMode = false;
+
+        var HeatMap = {};
+        HeatMap.isHeatmap = false;
+
+        var dataTableRowCount = [[${dataTableRowCount}]];
+        var pageRefreshDate = [[${pageRefreshDate}]];
+        var pageRefreshTimeInterval = [[${pageRefreshTimeInterval}]]; 
+
+        var paramMaxCountEventsExcel = [[${maxCountEventsExcel}]];
+        paramWriteUserSettingsToCookieAfterLogin = [[${writeUserSettingsToCookieAfterLogin}]];
+        providerUserId = [[${providerUserId}]];
+        
+        var eventTypeList = [[${eventTypes}]];
+       
+        
+        /*]]>*/
+    </script>
+    
+	<script type="text/javascript" th:src="@{/webjars/leaflet/1.6.0/leaflet.js}"></script>
+	<script type="text/javascript" th:src="@{/js/leaflet/leaflet.draw.js}"></script>
+	<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery-tmpl/jquery.tmpl.js}"></script>
+	<script type="text/javascript" th:src="@{/js/leaflet/CanvasMarker.js}"></script>
+	<script type="text/javascript" th:src="@{/js/map/map-helper-table.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    <script type="text/javascript" th:src="@{/js/map/svg-helper.js?v=} + ${@environment.getProperty('build.version')}"></script>
+  	<script type="text/javascript" th:src="@{/js/select2.min.js}"></script>
+  	<script type="text/javascript" th:src="@{/js/wijmo.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/wijmo.nav.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/custom/sweetalert.js}"></script>
+  	<script type="text/javascript" th:src="@{/js/bootstrap-toggle.min.js}"></script>
+  	<script type="text/javascript" th:src="@{/js/page/common.js?v=} + ${@environment.getProperty('build.version')}"></script>
+        
+    <script th:src="@{/js/daterangepicker.js}"></script>
+    <script th:src="@{/js/datepicker.js}"></script>
+    <script type="text/javascript" th:src="@{/js/page/eventTableView.js?v=} + ${@environment.getProperty('build.version')}"></script> 
+    <script type="text/javascript" th:src="@{/js/custom/alert.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    <script th:src="@{/js/beforeafter.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/page/imageCompare.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    
+    <script th:src="@{/js/headerMenu.js}"></script>
+    <script type="text/javascript" th:src="@{/js/custom/event-table-column.js?v=} + ${@environment.getProperty('build.version')}"></script>
+</th:block>
+
+
+<th:block layout:fragment="modal">
+
+	<!-- MODAL -->
+	<div th:replace="modals/detailed_search :: detailModalSearch">detailModalSearch</div>
+	<div th:replace="modals/key_detail :: keyDetail">keyDetail</div>
+	<div th:replace="modals/alert_detail :: detailModalAlert">detailModalAlert</div>
+	<div th:replace="modals/alert_share_detail :: detailModalAlertShare">detailModalAlertShare</div>
+	<div th:replace="modals/compare_pictures :: compareModalPictures">compareModalPictures</div>
+	<div th:replace="modals/choose_pictures :: chooseModalPictures">chooseModalPictures</div>
+	<div th:replace="modals/state_change_batch_operations :: stateChangeBatchOperations">stateChangeBatchOperations</div>
+<div th:replace="modals/alert_add_detail :: detailModalAlertAdd">detailModalAlertAdd</div>
+</th:block>
+</html>

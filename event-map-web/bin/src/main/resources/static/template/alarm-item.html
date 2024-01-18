@@ -1,0 +1,44 @@
+		<div class="col-md-12 mb-2 mt-2 sidebarItem news-card"  >
+			<div class="card course-card hover-effect noborder" id="${id}" data-id="${id}" data-color="#{label.alert.color}"  style="box-shadow: 0 0 20px rgba(0,0,0,.2); --bcolor: ${color};">
+				<div class="card-body py-2">
+					
+					<i class="fa fa-bell fa-lg alarmIcon sidebarAlarmIcon" onclick="Page.ChooseAlert('${id}');" aria-hidden="true"></i>
+					<p class="t500 mb-3 mt-2"><a href="#" onclick="Page.ChooseAlert('${id}');" class="d-block time-ago" >${CustomFormatter.GetDatePrettyFormatted(createDate)}</a></p>
+					<div class="news-top-right">
+					<i class="fa fa-trash fa-lg alarmSidebarDelete" id="alarmDelete" onclick="Alert.sidebarAlarmDelete('${id}')" aria-hidden="true"></i>
+																								
+					</div>
+					<h4 class="card-title t600 mb-2 news-title"><a href="#" id="alarmName" class="d-block" onclick="Page.ChooseAlert('${id}');" >${name}</a></h4>
+					<h4 class="card-text text-black-50 mb-1 news-title w-100 t500 news-content" onclick="Page.ChooseAlert('${id}');">${query}</h4>
+					
+					{{if eventTypeName }}
+					<h4 class="card-text text-black-50 mb-1 news-title w-100 t500 news-content" onclick="Page.ChooseAlert('${id}');">${lang.props["label.alert.eventType"]}: ${eventTypeName}</h4>
+					{{/if}}
+					
+					{{if eventGroupName }}
+					<h4 class="card-text text-black-50 mb-1 news-title w-100 t500 news-content" onclick="Page.ChooseAlert('${id}');">${lang.props["label.alert.eventGroup"]}: ${eventGroupName}</h4>
+					{{/if}}									
+				</div>
+			
+				 <div class="card-footer py-2 d-flex justify-content-between align-items-center bg-white text-muted news-footer"  onclick="Page.ChooseAlert('${id}');">
+													 
+					<a href="#"></a>
+				
+					{{if sharedBy}}
+						<p class="sharedByName">${sharedBy} ${lang.props["label.sharedBy"]}</p>
+					{{/if}}
+					<div class="clearfix news-share-div">	
+					
+					
+					<button type="button" class="btn  alert-share" id="${id}"  onclick="Page.AlertShare('${id}')">
+						<i class="fa fa-share-alt alertShareIcon" aria-hidden="true"></i>
+						<span class="alertShareText" th:text="#{label.share}" >${lang.props["label.share"]}</span>
+					</button>
+											
+					</div>							
+					
+					
+				</div>
+				
+			</div>
+		</div>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+
+	<div th:fragment="detailModalSearch">
+		<!-- Modal -->
+		<div class="modal fade" id="detailModalSearch" tabindex="-1" 
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-body">
+					<div class="modal-content">
+						<div class="modal-header header-info d-block">
+
+							<!-- 											<h4 class="modal-title" id="myModalLabel">Modal Heading</h4> -->
+
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<i class="fa fa-search fa-2x detailedSearchIconModal"
+								aria-hidden="true"></i>
+							<h4 class="mr-2 mb-2 t500"
+								th:text="#{label.detailed.event.search}">Detaylı Arama</h4>
+
+
+						</div>
+						<div class="modal-body px-0 pb-0">
+							<div class="container text-area px-4">
+								<!-- Modal Text Alanı -->
+								<div class="img-location-time-area "></div>
+
+								<form id="" class="detailed-search-form-step" name="contact" role="form">
+									<div class="modal-body">
+
+										<div class="form-group">
+											<label for="name" th:text="#{label.event.title.spot.description}">Title/Spot/Description</label> 
+											<input type="text" id="eventSearchDetailed" name="eventSearchSpotTitleDescription" class="form-control">
+											
+										</div>
+										
+										<div class="form-group">
+											<label for="city" th:text="#{label.event.city}">İl</label> 
+											<input id="eventSearchCity" type="text" name="city" class="form-control" >
+											
+										</div>
+										
+										<div class="form-group">
+											<label for="country" th:text="#{label.event.country}">Ülke</label> 
+											<input id="eventSearchCountry" type="text" name="country" class="form-control" >
+											
+										</div>
+
+
+										<div class="form-group m-select2 search " >
+											<label for="sela1" th:text="#{label.eventType}">Olay Türü</label> 
+											
+											<select class="form-control m-select2 m_select2_12_4" multiple="multiple" id="searchEventType" name="searchEventType">
+<!-- 											  <option disabled th:text="#{label.search.event.type}" value="0"></option> -->
+											</select>
+										</div>
+										
+										
+
+											
+										
+										<div class="heatMapDateFilter" id="detailedSearchDateFilter" >
+											<div class="input-group " id="heatmapStartDateDiv" data-target-input="nearest" data-target=".datetimepicker" >
+												<label for="country" th:text="#{label.startDate}" style="width: 100%">Ülke</label> 
+												<input type="text"  name="startDate" class="form-control datetimepicker-input datetimepicker heatmapStartDate" id="startDate" data-target=".datetimepicker" placeholder="DD/MM/YYYY HH:mm:ss"/>
+												<div class="input-group-append" data-target=".datetimepicker" data-toggle="datetimepicker">
+													<div class="input-group-text "><i class="icon-calendar heatmapSearchDateIcon"></i></div>
+												</div>
+											</div>
+												
+					
+											<div class="input-group " id="heatmapEndDateDiv" data-target-input="nearest" data-target=".datetimepicker2" style="margin-top: 15px;">
+												<label for="country" th:text="#{label.endDate}" style="width: 100%">Ülke</label> 
+												<input type="text" name="endDate" class="form-control datetimepicker-input datetimepicker2 heatmapEndDate" id="endDate" data-target=".datetimepicker2" placeholder="DD/MM/YYYY HH:mm:ss"/>
+												<div class="input-group-append" data-target=".datetimepicker2" data-toggle="datetimepicker">
+													<div class="input-group-text"><i class="icon-calendar heatmapSearchDateIcon"></i></div>
+												</div>
+											</div>
+										</div>
+										
+										<div class="input-group ">
+										  <div  class=" alert-events" >
+										    <input class=" alertEventChecked" name ="alertEventChecked" type="checkbox" checked="false" value="" id="alertEventChecked">
+										    <span onClick="Common.AlertEventLoadControl()" class="alertText" th:text="#{label.alert.events}"></span>
+										    <span onClick="Common.AlertEventLoadControl()"class="badge badge-light alertReadCount" th:text="0"></span>
+										    <span onClick="Common.AlertEventLoadControl()">
+										      <i class="fa fa-envelope fa-1x readStateIconClose alertEventIcon" style="color:white"></i>
+										    </span>
+										  </div>
+										  
+
+										</div>
+										
+										<!-- Tree Event Group -->
+										
+										<div class="input-group mt-2" id="detailed-search-event-group">
+											<label for="eventGroup" th:text="#{label.eventGroup}" style="width:100%;">Olay Grupları</label> 
+											<div id="theTree"></div>
+										</div>
+											
+										<!-- Tree Event Group -->
+										
+										
+
+
+									</div>
+
+								</form>
+
+							</div>
+
+						</div>
+
+						<div class="modal-footer">
+						
+						
+							<div class=" mr-auto">
+						        <button type="button" class="btn btn-danger " onclick="DetailedSearch.EventSearchClear()" data-dismiss="modal" style="float: left;">Temizle</button>
+	
+								<div class="dropdown" style="float: left;margin-left: 10px;">
+								  <button class="btn btn-secondary dropdown-toggle event-group-operation" type="button" th:text="#{label.transactions}" id="detailedSearchEventGroupOperation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    İşlemler
+								  </button>
+								  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								    <a class="dropdown-item" onclick="Page.userSettingsSave()" href="#" th:text="#{label.user.settings.save}">Ayarlara Kaydet</a>
+								    <a class="dropdown-item user-settings-operation" onclick="Page.UsingDefaultSearch(true)" href="#" th:text="#{label.get.from.user.settings}">Ayarlardan Getir</a>
+								    <a class="dropdown-item user-settings-operation" onclick="Page.userSettingsDelete()" href="#" th:text="#{label.delete.user.settings}">Ayarları Sil</a>
+								    
+								  </div>
+								</div>
+	    					</div>
+							
+							<button type="button" id="detailedSearch" onClick="DetailedSearch.EventSearch()" class="btn btn-primary " data-id="" th:text="#{label.search}">Ara</button>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal" th:text="#{label.close}">Kapat</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

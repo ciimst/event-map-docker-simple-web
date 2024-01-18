@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layouts/main_layout}">
+
+<head>
+    <title>Table Child Row Deneme</title>
+</head>
+
+<th:block layout:fragment="link">
+
+    <link rel="stylesheet" th:href="@{/css/datatables/jquery.dataTables.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/select2.min.css}" type="text/css"/>
+    <link th:href="@{/css/profile.css?v=} + ${build_version}" rel="stylesheet" type="text/css" /> 
+    
+</th:block>
+
+<body layout:fragment="content">
+	
+	<section id="content" class="map-d blackListSection">
+	    <div class="container-fluid clearfix px-0">
+	
+	        <div th:replace="fragments/sidebar :: sidebar">Sidebar</div>
+	
+	    </div>
+	</section>
+
+	<div class="container-fullwidth mt-2 ">
+		<div class="row d-flex justify-content-center">
+	
+	    	<div class="col-md-12">
+	
+	        	<div class="p-3 py-2 advanced-search">
+	
+	
+					<form class="advanced-search m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed p-1">
+	                <div class="row">
+	
+               			 <div class="col-lg-3 col-md-4 col-sm-12">
+	                          <div class="form-group" id="filter_col0" data-column="name">
+	                              <label th:text="#{label.blackList.name}"></label>
+	                              <input type="text" name="name" class="form-control column_filter searchText"  id="col5_filter" th:placeholder="#{label.blackList.name}">
+	                          </div>
+	                 	 </div>
+	                 
+	               		 <div class="col-lg-3 col-md-4 col-sm-12">
+		                        <div class="form-group" id="filter_col0" data-column="tag">
+		                            <label th:text="#{label.blackList.tag}"></label>
+		                            <input type="text" name="tag" class="form-control column_filter searchText"  id="col5_filter" th:placeholder="#{label.blackList.tag}">
+		                        </div>
+	                 	  </div>
+	                 
+	          			  <div class="col-lg-3 col-md-4 col-sm-12">
+		                       <label for="layerId" th:text="#{label.layers}">Katmanlar</label>
+		                       <div class="m-select2" data-column="layerId">
+		                           <select class="form-control m-select2 m_select2_12_4 select2"
+		                                   id="layerId"
+		                                   name="layerName"
+		                                   th:attr="data-placeholder=#{label.layer}">
+		                               <option></option>
+		                               <option th:each="layer : ${layers}"
+		                                       th:value="${layer.id}"
+		                                       th:text="${layer.name}">Options</option>
+		                           </select>
+		                       </div>
+		                  </div>
+	
+	                   	  <div class="col-lg-3 col-md-4 col-sm-12">
+		                       <label for="eventGroupId" th:text="#{label.EventGroups}">Olay Grupları</label>
+		                       <div class="m-select2" data-column="eventGroupId">
+		                           <select class="form-control m-select2 m_select2_12_4 select2"
+		                                   id="eventGroupId"
+		                                   name="eventGroupName"
+		                                   th:attr="data-placeholder=#{label.eventGroup}">
+		                               <option></option>
+		                               <option th:each="eventGroup : ${eventGroups}"
+		                                       th:value="${eventGroup.id}"
+		                                       th:text="${eventGroup.name}">Options</option>
+		                           </select>
+		                       </div>
+		                   </div>
+	                                                        
+		                   <div class="col-lg-3 col-md-4 col-sm-12">
+		                        <label for="eventTypeId" th:text="#{label.EventTypes}"> Olay Türleri</label>
+		                        <div class="m-select2" data-column="eventTypeId">
+		                            <select class="form-control m-select2 m_select2_12_4 select2"
+		                                    id="eventTypeId"
+		                                    name="eventTypeId"
+		                                    th:attr="data-placeholder=#{label.eventType}">
+		                                <option></option>
+		                                <option th:each="eventType : ${eventTypes}"
+		                                        th:value="${eventType.id}"
+		                                        th:text="${eventType.name}">Options</option>
+		                            </select>
+		                        </div>
+		                    </div>
+	
+		                    <div class="col-lg-3 col-md-4 col-sm-12">
+		                         <label th:text="#{label.state}"></label>
+		                         <div class="m-select2" data-column="state">
+		                             <select class="form-control m-select2 m_select2_12_4"
+		                             		 id="state"
+		                                     name="state"
+		                                     th:attr="data-placeholder=#{label.state}">
+		                                 <option></option>
+		                                 <option th:text="#{label.active}" value="true"></option>
+		                                 <option th:text="#{label.passive}" value="false"></option>
+		                             </select>
+		                         </div>
+		                     </div>
+		                     <div class="form-group m-form__group row justify-content-end" style="margin-top: 30px; margin-left: 0px;">
+		                        <div class="col-4">		                          
+			                         <div class="m-input-icon m-input-icon--right">
+			                             <button type="button" id="search-button" class="btn btn-primary m-btn m-btn--icon m-btn--wide button-r searchButton ">
+				                             <span><i class="la la-fw la-search"></i><span th:text="#{label.search}">Arama</span></span>
+			                             </button>
+			                         
+			                         </div>
+			                    </div>
+			                    <div class="col-8">		                             
+				                     <div class="m-portlet__head-tools" > 
+				                            <button id="addBlackList" type="button" class="btn btn-success m-btn m-btn--icon"  data-toggle="modal" data-type="add" onclick="BlackListTable.openBlackListModal()">                                    
+				                                <span><i class="la la-fw la-plus"></i><span th:text="#{label.add.new}"></span></span>
+				                            </button>
+				                     </div>
+			                     
+			                     </div>
+		                   
+		                	</div>
+	                   </div>
+	                </form>
+	                
+	        	</div>
+	    	</div>
+		</div>
+	</div>
+	
+	
+	<div id="tableContainer" class="container-fullwidth mt-2 overflow-auto table-responsive" style="padding-bottom: 300px; ">
+	    <table id="blackListTable" class="display" style="width:100%; border-top: 1px solid rgba(0, 0, 0, 0.125);    padding-top: 10px;">
+	        <thead>
+	        <tr>
+	        	<th></th>
+	           	<th th:text="#{label.name}">İsim</th>
+	           	<th th:text="#{label.layer}">Layer</th>
+	           	<th th:text="#{label.event.group}">Olay Grubu</th>
+	           	<th th:text="#{label.event.type}">Olay Türü</th>
+	           	<th th:text="#{label.tag}">Etiket</th>
+	           	<th th:text="#{label.createUser}">Oluşturan Kullanıcı</th>
+	           	<th th:text="#{label.create.date}">Oluşturulma Tarihi</th>
+	           	<th th:text="#{label.state}">Durum</th>
+	           	<th th:text="#{label.action.state}">Action State</th>
+	           	<th th:text="#{label.operation}">İşlem</th>
+
+	        </tr>
+	        </thead>
+	    </table>
+	</div>
+	
+</body>
+
+<th:block layout:fragment="script">
+
+    <script type="text/javascript" th:src="@{/js/datatables/jquery.dataTables.min.js}"></script>
+        
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var paramLayerId = [[${layerId}]];
+
+        var dataTableRowCount = [[${dataTableRowCount}]];
+        var pageRefreshDate = [[${pageRefreshDate}]];
+        var pageRefreshTimeInterval = [[${pageRefreshTimeInterval}]]; 
+
+        /*]]>*/
+    </script>
+    
+    <script type="text/javascript" th:src="@{/webjars/leaflet/1.6.0/leaflet.js}"></script>
+	<script type="text/javascript" th:src="@{/js/leaflet/leaflet.draw.js}"></script>
+	<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery-tmpl/jquery.tmpl.js}"></script>
+  	<script type="text/javascript" th:src="@{/js/select2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/custom/sweetalert.js}"></script>
+   	<script type="text/javascript" th:src="@{/js/map/svg-helper.js?v=} + ${@environment.getProperty('build.version')}"></script>
+  	<script th:src="@{/js/wijmo.min.js}"></script>
+    <script th:src="@{/js/wijmo.nav.min.js}"></script>	 
+    
+  	<script th:src="@{/js/page/common.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    
+    <script type="text/javascript" th:src="@{/js/page/blackList.js?v=} + ${@environment.getProperty('build.version')}"></script> 
+    <script th:src="@{/js/headerMenu.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    <script th:src="@{/js/custom/alert.js?v=} + ${@environment.getProperty('build.version')}"></script>
+    
+</th:block>
+
+<th:block layout:fragment="modal">
+
+	<!-- MODAL -->
+    <div th:replace="modals/add_black_list :: addBlackListModal">addBlackListModal</div>
+    <div th:replace="modals/alert_detail :: detailModalAlert">detailModalAlert</div>
+	<div th:replace="modals/alert_add_detail :: detailModalAlertAdd">detailModalAlertAdd</div>
+	<div th:replace="modals/alert_share_detail :: detailModalAlertShare">detailModalAlertShare</div>
+    <div th:replace="modals/progress_bar :: progressBar">progressBar</div>
+    <div th:replace="modals/key_detail :: keyDetail">keyDetail</div>
+
+</th:block>
+
+</html>

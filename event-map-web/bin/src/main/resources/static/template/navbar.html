@@ -1,0 +1,40 @@
+						
+						
+						{{each(i, menu) menuList}}                
+							
+							{{if 1 >= i }}
+							
+								<li><a href="/region/${menu.layerGuid}" title="${menu.titleLayerName}" {{if menu.layerGuid == activeLayerId }} class="active" {{/if}} >${menu.layerName}</a></li>
+							
+							{{else}}  
+								{{if menu.layerGuid == activeLayerId }} 
+									${( $data.dropdownActiveClass = 'active' ),''}								
+								{{/if}}
+							{{/if}}
+							
+
+       					{{/each}} 
+						
+						
+						{{if menuList.length > 2 }}
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle ${dropdownActiveClass}"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								${lang.props["label.regions"]}
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+								{{each(i, menu) menuList}}                
+									{{if i > 1 }}
+
+										${( $data.isLayerActive = '' ),''}
+										{{if menu.layerGuid == activeLayerId }}
+											${( $data.isLayerActive = 'active' ),''}
+										{{/if}}
+										<a class="dropdown-item ${isLayerActive}" title="${menu.titleLayerName}" href="/region/${menu.layerGuid}"  >${menu.layerName}</a>
+
+									{{/if}}
+	        					{{/each}}       
+							</div>
+						</li> 
+						{{/if}}
+

@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.Dep.Web.name }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount.web }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ .Values.Dep.Web.name }}
+  template:
+    metadata:
+      labels:
+        {{- include "eventmapchart.postgisNetworkLabels" . | nindent 8 }}
+        app: {{ .Values.Dep.Web.name }}
+    spec:
+      {{- if .Values.Dep.imageCredentials.enabled }}
+      imagePullSecrets:
+        - name: {{ .Values.Dep.imageCredentials.secretUsed }}
+      {{- end}}
+      containers:
+        - image: {{ .Values.Dep.registry }}/{{ .Values.Dep.Web.image.repo }}:{{ .Values.Dep.Web.image.tag }}
+          name: {{ .Values.Dep.Web.name }}
+          {{- if .Values.Dep.Web.command }}
+          command: 
+          {{ toYaml .Values.Dep.Web.command | nindent 12 }}
+          {{- end }}
+          {{- with .Values.Config.Web.envFrom }}
+          envFrom:
+              {{- toYaml . | nindent 14 }}
+          {{- end }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.Dep.Web.containerport }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            # tcpSocket:
+            #   port: {{ .Values.Dep.Web.containerport }}
+            httpGet:
+              {{- if .Values.Ingress.enabled }}
+              path: {{ .Values.Ingress.WebPath }}{{ .Values.Properties.Web.SERVER_SERVLET_CONTEXTPATH }}/live
+              {{- else }}
+              path: {{ .Values.Properties.Web.SERVER_SERVLET_CONTEXTPATH }}/live
+              {{- end }}
+              port: {{ .Values.Dep.Web.containerport }}
+              {{- if .Values.Properties.Web.SERVER_SSL_ENABLED }}
+              scheme: HTTPS
+              {{- end }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            # tcpSocket:
+            #   port: {{ .Values.Dep.Web.containerport }}
+            httpGet:
+              {{- if .Values.Ingress.enabled }}
+              path: {{ .Values.Ingress.WebPath }}{{ .Values.Properties.Web.SERVER_SERVLET_CONTEXTPATH }}/ready
+              {{- else }}
+              path: {{ .Values.Properties.Web.SERVER_SERVLET_CONTEXTPATH }}/ready
+              {{- end }}
+              port: {{ .Values.Dep.Web.containerport }}
+              {{- if .Values.Properties.Web.SERVER_SSL_ENABLED }}
+              scheme: HTTPS
+              {{- end }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+          {{- end }}

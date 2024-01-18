@@ -1,0 +1,120 @@
+		<div class="col-md-12 mb-2 mt-2 sidebarItem news-card" id="${eventGroupKey}" >
+			<div class="card course-card hover-effect noborder" id="${event.sidebarId}" data-id="${event.id}" data-color="${event.color}" onclick="Page.ChooseEvent('${dbName}${event.id}');" style="box-shadow: 0 0 20px rgba(0,0,0,.2); --bcolor: ${event.color};">
+				<div class="card-body py-2">
+					
+					<img class="i-circled i-custom"  src="${event.sidebarSrc}" />
+					<p class="t500 mb-3 mt-2"><a href="#" class="d-block time-ago" >${CustomFormatter.GetDatePrettyFormatted(event.eventDate)}</a></p>
+					<div class="news-top-right">
+					
+						{{if alertList}}								
+							{{each(i,alert) alertList}} 
+																					
+								{{if !alert.readState && i==0 }}
+									<i class="fa fa-envelope-open fa-1x readStateIcon"  id="readStateIcon" style="visibility:hidden;" aria-hidden="true"></i>
+									<i class="fa fa-envelope fa-1x readStateIconClose" style="color:red;"aria-hidden="true"></i>
+									
+								{{/if}}
+								{{if alert.readState && i==0}}
+									<i class="fa fa-envelope-open fa-1x"  style="color:green;" aria-hidden="true"></i>
+									
+								{{/if}}
+									
+								{{/each}}   
+						{{/if}} 
+						
+						
+						{{if alertList}}								
+						<i class="fa fa-bell fa-1x alarmIcon" aria-hidden="true"></i>
+						{{/if}} 
+						
+						
+						
+						
+						<a
+						{{if event.reservedLink}}
+						href="${event.reservedLink}"
+						{{/if}}
+						class="source" target="_blank"><i class="fas fa-external-link-alt"></i> ${lang.props["label.news.source"]}</a>
+						
+						
+					</div>
+					<h4 class="card-title t500 mb-2 news-title"><a href="#" class="d-block" >${event.title}</a></h4>
+					
+					<h4 class="card-text text-black-50 mb-1 news-title w-100 t500 news-content">${event.spot}</h4>
+				</div>
+				
+				 
+				
+				
+				{{if mediaList}}
+				
+            	<div class="fslider" data-arrows="false">
+					<div class="flexslider">
+						<div class="slider-wrap">
+        					                
+            				
+							{{each(i,media) mediaList}}                
+							
+							<div class="slide">
+								<a href="#"  >
+								
+								{{if JqueryTmplHelper.startsWithHttp(media.coverImagePath) }}												
+									<img  src="${media.path}" alt="">
+<!-- 									<div class="video-overlay" ></div> -->
+									{{if media.isVideo }}
+										<i class="fa fa-play-circle fa-4x video-play-icon" aria-hidden="true" ></i>
+									{{/if}}  													
+								{{else}}  
+									<img src="${contextPath}image/get/${media.coverImagePath}" alt="">
+<!-- 									<div class="video-overlay" ></div>	 -->
+									{{if media.isVideo }}
+										<i class="fa fa-play-circle fa-4x video-play-icon" aria-hidden="true" ></i>
+									{{/if}}
+								{{/if}}  				
+								</a>
+							</div>
+
+        					{{/each}}       
+							
+						</div>
+					</div>
+				</div>
+        		{{/if}}  
+	   			
+	   			{{if false}}
+<!-- 	   			<div class="fslider" data-arrows="false" data-lightbox="gallery"> -->
+<!-- 					<div class="flexslider"> -->
+<!-- 						<div class="slider-wrap slides"> -->
+<!-- 							<div class="slide"><a href="/image/get/1" data-lightbox="gallery-item"><img class="image_fade" src="/image/get/1" alt="Standard Post with Gallery"></a></div> -->
+<!-- 							<div class="slide"><a href="/image/get/2" data-lightbox="gallery-item"><img class="image_fade" src="/image/get/2" alt="Standard Post with Gallery"></a></div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+				
+<!-- 				<div class="fslider" data-arrows="false" data-lightbox="gallery"> -->
+<!-- 					<div class="flexslider" id="flexidid"> -->
+<!-- 					  <ul class="slides"> -->
+<!-- 					    <li> -->
+<!-- 					      <img src="/image/get/1" /> -->
+<!-- 					    </li> -->
+<!-- 					    <li> -->
+<!-- 					      <img src="/image/get/2" /> -->
+<!-- 					    </li> -->
+<!-- 					  </ul> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+				{{/if}} 
+				
+				<div class="card-footer py-2 d-flex justify-content-between align-items-center bg-white text-muted news-footer">
+					
+					<a href="#"></a>
+					<!-- 					<a href="${event.reservedLink}"><i class="fas fa-user"></i> Kaynak </a> -->
+					<div class="clearfix news-share-div">
+
+						
+						<p class="mb-0 card-title-sub t500 ls1 news-location"><a href="#" class="d-block"  >${event.location}</a></p>
+								
+					</div>
+				</div>
+			</div>
+		</div>

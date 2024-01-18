@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+	<div th:fragment="sidebar" th:remove="tag">
+	<a name="#"></a>
+	<header  id="header" th:fragment="header" class="d-md-none static-sticky transparent-header clearfix header2 sticky-header">
+
+		<div id="header-wrap" class="header2">
+
+			<div class="container clearfix p-0" style="max-width:100%">
+
+
+				<nav id="primary-menu" class="style-2 with-arrows clearfix">
+
+					<!-- Responsive yapida cikan menu icin -->
+					<ul id="secondary-menu" class="right" style="float: right;">
+						<li ><a href="##" class="menu-with-logo menu-sidebar" name="news-live"><i class="far fa-file-alt fa-fw"></i><span class="hidden-text" th:text="#{label.news}">Canlı Akış</span></a></li>
+						<li ><a th:href="@{'/event-table/' + ${layerId}}"  class="menu-with-logo menu-sidebar step-event-table" name="event-table"><i class="icon-line-layout"></i><span class="hidden-text" th:text="#{label.live.table}">Canlı Akış Tablo</span></a></li>
+						<li ><a th:href="@{'/timeDimension/' + ${layerId}}"  class="menu-with-logo menu-sidebar" name="timedimension"><i class="fas fa-play"></i><span id = "timeDimentionPlayİsActive"class="hidden-text" th:text="#{label.timeslider}">TimeDimention</span></a></li>
+						<li ><a th:href="@{'/heatmap/' + ${layerId}}"  class="menu-with-logo menu-sidebar" name="heatmap"><i class="fas fa-burn"></i><span id = "heatmapIsActive"class="hidden-text" th:text="#{label.heatmap}">Isı Haritası</span></a></li>
+
+						<li ><a th:href="@{'/event-table-view/' + ${layerId}}"  class="menu-with-logo menu-sidebar" name="event-table-view"><i class="fas fa-table"></i><span class="hidden-text" th:text="#{label.table}">Tablo Görünümü</span></a></li>
+<!-- 						<li ><a href="##" class="menu-with-logo menu-sidebar" name="alarm"><i class="fa fa-bell"></i><span class="hidden-text" th:text="#{label.alarm}">Alarm</span></a></li> -->
+<!-- 						<li ><a href="##" class="menu-with-logo menu-sidebar" name="language"><i class="fas fa-globe-europe fa-fw"></i><span class="hidden-text" th:text="#{label.language}">Dil</span></a></li> -->
+						<li ><a href="##" class="menu-with-logo menu-sidebar" name="time"><i class="far fa-clock fa-fw"></i><span class="hidden-text" th:text="#{label.timeline}">Zaman</span></a></li>
+<!-- 						<li ><a href="##" class="menu-with-logo menu-sidebar" name="key"><i class="far fa-compass fa-fw"></i><span class="hidden-text" th:text="#{label.key}">Anahtar</span></a></li> -->
+<!-- 						<li ><a th:href="'/black-list'"  class="menu-with-logo menu-sidebar" name="blackList"><i class="fa fa-ban"></i><span class="hidden-text" th:text="#{label.blackList}">Black List</span></a></li> -->
+<!-- 						<li ><a th:href="'/settings/' + ${layerId}"  class="menu-with-logo menu-sidebar" name="settings"><i class="fa fa-cog"></i><span class="hidden-text" th:text="#{label.settings}">Ayarlar</span></a></li> -->
+						<!-- <li ><a th:href="'/settings/' + ${layerId}"  class="menu-with-logo menu-sidebar" name="settings"><i class="fas fa-map"></i><span class="hidden-text" th:text="#{label.settings}">Ayarlar</span></a></li>-->
+					
+						<li class="nav-item dropdown " id="navbarDropdown" style="top: 5px">
+						   <a class="nav-link   menu-with-logo" href="#" data-bs-toggle="dropdown"> <i class="fas fa-list fa-lg" ></i> <span th:text="#{label.more}"></span></a>
+<!-- 						  	<a th:href="'/settings/' + ${layerId} + '/AbcdGroup'" class="nav-link  dropdown-toggle menu-with-logo" ata-bs-toggle="dropdown" name="settings"><i class="fa fa-cog"></i><span class="hidden-text" th:text="#{label.settings}">Ayarlar</span></a> -->
+						    <ul class="dropdown-menu rightMenuDropDown dropdown-menu-start" role="menu">
+						   		<li class=""><a th:href="@{'/settings/' + ${layerId} + '/ExcelYönetim'}" class="dropdown-item menu-sidebar step-settings" name="settings"><i class="fa fa-cog rightMenuIcon"></i><span class="hidden-text rightMenuSpan" th:text="#{label.settings}">Ayarlar</span></a></li>
+						   		<li class=""><a href="#" class="dropdown-item menu-sidebar step-alarm" name="alarm"><i class="fa fa-bell rightMenuIcon"></i><span class="hidden-text rightMenuSpan" th:text="#{label.alarm}">Alarm</span></a></li>
+								<li class=""><a href="#" class="dropdown-item menu-sidebar step-language" name="language"><i class="fas fa-globe-europe fa-fw rightMenuIcon"></i><span class="hidden-text rightMenuSpan" th:text="#{label.language}">Dil</span></a></li>
+							 	<li class=""><a href="#" class="dropdown-item menu-sidebar step-key" name="key"><i class="far fa-compass fa-fw rightMenuIcon"></i><span class="hidden-text rightMenuSpan" th:text="#{label.key}">Anahtar</span></a></li>
+								<li class=""><a th:href="@{'/black-list/' + ${layerId}}"  class="dropdown-item menu-sidebar step-blackList" name="blackList"><i class="fa fa-ban rightMenuIcon"></i><span class="hidden-text rightMenuSpan" th:text="#{label.blackList}">Black List</span></a></li> 
+							 	<li th:if="${T(com.imst.event.map.web.utils.SettingsUtil).getOptionalButtonValue()}"><a th:href="@{/logout}" class=" dropdown-item logout" ><i class="fas fa-sign-in-alt fa-fw rightMenuIcon"></i><span class="hidden-text rightMenuSpan" th:text="#{label.logout}">Çıkış</span></a></li>
+							 
+						    </ul>
+						</li>
+					
+					</ul>
+
+				</nav><!-- #primary-menu end -->
+
+			</div>
+
+		</div>
+
+	</header>
+	
+
+		
+		<div id="ttt">
+		
+		
+		<!-- <p class="alert-events">Alarmlı Olaylar</p> -->
+		<div id="news-live" class="col-lg-3 col-md-4 col-padding px-0 inside-sidebar sidebar-w pt-0 step-live-sidebar">
+			<!-- News Live Alanı --> 
+			<div class="clearfix">
+				<div class="heading-block nobottommargin pl-3 sidebar-content-header " id="sidebarContentHeader">			
+	
+					<h4 th:text="#{label.news}" class="sidebar-header" id="live-sidebar-header">Canlı Akış</h4>
+					
+					
+					
+					
+					
+    				
+					<!--<input type="button" th:value="#{label.alert.events}"  class="btn btn-danger alert-events"/>	-->										
+					<h5 class="update-news-date"><span class="nocolor" th:text="#{label.news.updated.time}">Güncelleme Zamanı</span><i>: </i><span id="updateDate" class="nocolor">14.05.2020 14:19:51</span></h5>
+
+
+	               	<div class="sidebarBadgeIconSpan" id="group">
+	                 	<div>
+	                 		<i class="fa fa-bookmark goToLastEventBookmarkIcon" id="goToLastEvent" onClick="Page.GoToLastEvent()"></i>
+	                 		
+	                  		<i class="fa fa-envelope alarmBadgeIcon" ></i>
+	                 		<span class="badge badge-dark sidebarBadgeAlertCount alertReadCount" id="sidebarAlertReadCount" th:text="0">5</span>
+	               		</div>
+	               	</div>
+
+			
+
+                	
+                	<div class="wrap" id="defaultNewsAndTimeDimensionSearch">
+
+
+						<div class="input-group search eventTextSearch">
+						  <input type="text" class="form-control" id="eventSearch" th:placeholder="#{label.search}"  aria-describedby="basic-addon2" onkeypress="DetailedSearch.HandleEventSearch(event)">
+						  <div class="input-group-append"  id="eventSearchButton" onClick="DetailedSearch.EventSearch(true)">
+						    <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+						  </div>
+						</div>
+						
+						<div class="input-group search detailedSearchDiv detailedSearchDivNewsLive" id="detailedSearchDivNewsLive">
+							<span class="allEventLoadButton" id="allEventLoadButton" onClick="Page.LoadAllEvents()" th:text="#{label.all.events}"> Olayları göster</span>
+							
+							<p> <span class="detailedSearchSpan" onClick="DetailedSearch.AdvancedSearchModalOpen()" th:text="#{label.detailed.event.search}">Detaylı Arama</span><span id="detailedSearchBadge" class="badge badge-secondary detailedSearchBadgeCount">New</span></p>
+						</div>
+						
+						<div class="eventCountInfo" id="eventCountInfo" style="display: none"> 
+							<span class="generalFloat allEventLoadSpan" th:text=#{label.count.Event}>Olay sayısı:</span>
+							<span class=" generalFloat countLoadedEvents" id="countLoadedEvents">0</span>
+							<span class="generalFloat" id="seperatorCountEvents">/</span>
+							<span class="generalFloat totalCountEvents" id="totalCountEvents">0</span>
+						</div>
+
+						<div class="input-group tleft search defaultSearchResultAndButtonDiv" id="defaultSearchResultAndButtonDiv" style="display: none">
+							<div style="width:100%;">
+								<p class="countEventResult" id="eventFound">
+	                      			<span id="heatmapEventCount" style="color:red" >0</span>
+	                      			<span th:text="#{label.heatmap.result.found}"></span>
+	                      		</p>
+	                      		
+	                      		<p style="margin-top: -25px;" class="heatMapDetailedEventSearch"> <span class="detailedSearchSpan" onClick="DetailedSearch.AdvancedSearchModalOpen()" th:text="#{label.detailed.event.search}">Detaylı Arama</span><span id="detailedSearchBadgeHeatMap" class="badge badge-secondary detailedSearchBadgeCount">New</span></p>
+							</div>
+														
+	                      	<button type="button" class="btn btn-danger heatMapLoadSidebarEvent heatMapLoadSidebarEventShowEvents" id="heatMapLoadSidebarEvent" onClick="HeatMap.OnClickShowSidebarEvent()" th:text="#{label.event.show}" >Olayları Göster</button>
+						</div>	
+						
+						
+                	</div>
+
+
+
+				</div>
+				<div id="sidebarContainer" class="sidebarContainer sidebarOverflowClass">
+					
+
+				</div>
+			</div>
+			
+			<div class="page-load-status">
+<!-- 				<p class="infinite-scroll-request"> -->
+					<div class="loader-ellips">
+						<span class="loader-ellips__dot"></span>
+						<span class="loader-ellips__dot"></span>
+						<span class="loader-ellips__dot"></span>
+						<span class="loader-ellips__dot"></span>
+					</div>
+<!-- 				</p> -->
+<!-- 				<p class="infinite-scroll-last">End of content</p> -->
+<!-- 				<p class="infinite-scroll-error">No more pages to load</p> -->
+			</div>
+			
+
+
+			<div class="d-flex justify-content-center veritacalAndHorizantalDiv" id="heatMapSpinner" style="visibility: hidden">
+				 <p th:text="#{label.loading}"></p>
+			  <div class="spinner-border spinner-border-sm" role="status">
+			    <span class="sr-only">Loading...</span>
+			  </div>
+			  
+			</div>
+			
+			<div id="gotoTop" onclick="Common.GotoTop()" class="icon-angle-up" style="display: none">
+			</div>
+	
+		</div>
+		
+		<div id="alarm"
+			class="col-lg-3 col-md-4 col-padding px-0 inside-sidebar sidebar-w pt-0 step-alarm-sidebar"
+			style="display: none;">
+			<!-- Alarm Alanı -->
+			<div class="clearfix">
+				<div class="heading-block nobottommargin pl-3 sidebar-content-header">
+					<button class="btn btn-sm btn-danger sidebarAlertAddButton" onClick = "Alert.SidebarAdd()"><i class="fa fa-plus"></i><span style="margin-left: 5px;" th:text="#{label.add}"></span></button>
+					<h4 class="sidebar-header" th:text="#{label.alarms}">Alarmlar</h4>
+					
+					<!-- <input type="search" id="alarmSearch" placeholder="Alarm ara..." name="alarmSearch" > -->
+					
+					<div class="wrap alarmWrap">
+	                    <div class="search">
+	                        <input type="text" class="searchTerm" id="alarmSearch" th:placeholder="#{label.search}" onkeypress="Alert.handleAlarmSearch(event)">
+	                        <button type="button" class="searchButton" id="alarmSearchButton" onclick="Alert.alarmSearch()">
+	                            <i class="fa fa-search"></i>
+	                        </button>
+	                        
+	                         
+	                    </div>
+                	</div>
+										
+	
+				</div>
+				<div id="sidebarAlarmContainer">
+
+					
+
+				</div>
+			</div>
+			
+			<div class="page-load-status">
+<!-- 				<p class="infinite-scroll-request"> -->
+					<div class="loader-ellips">
+						<span class="loader-ellips__dot"></span>
+						<span class="loader-ellips__dot"></span>
+						<span class="loader-ellips__dot"></span>
+						<span class="loader-ellips__dot"></span>
+					</div>
+<!-- 				</p> -->
+<!-- 				<p class="infinite-scroll-last">End of content</p> -->
+<!-- 				<p class="infinite-scroll-error">No more pages to load</p> -->
+			</div>
+
+		</div>
+		
+
+		<div id="language"
+			class="col-lg-3 col-md-4 col-padding px-0 inside-sidebar sidebar-w pt-0 step-language-sidebar"
+			style="display: none;">
+			<!-- Dil Alanı -->
+			<div class="clearfix">
+				<div
+					class="heading-block nobottommargin pl-3 sidebar-content-header languageAndTimeAndKeySidebarHeader">
+					<h4 class="sidebar-header" th:text="#{label.language}">Dil</h4>
+				</div>
+				<div class="sidebarContainer sidebarOverflowClass">
+
+					<div class="col-md-12 mb-2 mt-2 news-card">
+						<div class="card course-card hover-effect noborder"
+							style="box-shadow: 0 0 20px rgba(0, 0, 0, .2);">
+							<div class="card-body">
+								<div id="locales" class="current language">
+									<ul class="mb-0">
+										<li style="border-bottom: 1px solid;"><a href="#"
+											data-iso="tr" class="lang-style"><img class="flag-w"
+												th:src="@{/image/flags/tr.png}" /> <span
+												th:text="#{langs.tr}">tr</span></a></li>
+										<li><a href="#" data-iso="en"><img class="flag-w"
+												th:src="@{/image/flags/en.png}" /> <span
+												th:text="#{langs.en}" class="lang-style">en</span></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+		<div id="time"
+			class="col-lg-3 col-md-4 col-padding px-0 inside-sidebar sidebar-w pt-0 step-time-sidebar"
+			style="display: none;">
+			<!-- Zaman Alanı -->
+			<div class="clearfix">
+				<div
+					class="heading-block nobottommargin pl-3 sidebar-content-header languageAndTimeAndKeySidebarHeader">
+					<h4 class="sidebar-header" th:text="#{label.timeline}" >Zaman</h4>
+				</div>
+				<div class="sidebarContainer sidebarOverflowClass">
+
+					<div class="col-md-12 mb-2 mt-2 news-card">
+						<div class="card course-card hover-effect noborder"
+							style="box-shadow: 0 0 20px rgba(0, 0, 0, .2);">
+							<div class="card-body">
+								<div id="locales" class="current timeLine">
+									<ul class="dd_1">
+										
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+		<div id="key"
+			class="col-lg-3 col-md-4 col-padding px-0 inside-sidebar sidebar-w pt-0 step-key-sidebar"
+			style="display: none;">
+			<!-- Keyword Alanı -->
+			<div class="clearfix">
+				<div
+					class="heading-block nobottommargin pl-3 sidebar-content-header languageAndTimeAndKeySidebarHeader">
+					<h4 class="sidebar-header" th:text="#{label.key}" >Anahtar</h4>
+				</div>
+				<div class="sidebarContainer sidebarOverflowClass languageAndTimeAndKeySidebarContainer">
+
+					<div class="col-md-12 mb-2 mt-2 news-card">
+						<div class="card course-card hover-effect noborder"
+							style="box-shadow: 0 0 20px rgba(0, 0, 0, .2);">
+							<div class="card-body">
+								<div id="locales" class="current key">
+									<div id="legend" class="scrotabs">
+
+										
+										<div class="new about abouttext" style="text-align: right !important" th:text="'v-' + ${@environment.getProperty('build.version')}">
+											version
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!--  <div class="new about abouttext" style="text-align: right !important" th:text="'v-' + ${@environment.getProperty('build.version')}">
+						version
+					</div>-->
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+
+	
+	</div>
+</body>
+</html>

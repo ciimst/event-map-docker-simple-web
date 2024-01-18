@@ -1,0 +1,15 @@
+package com.imst.event.map.web.datatables.vo;
+
+import lombok.*;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+public class Order {
+
+    private Integer column;
+    private Direction dir;
+
+}

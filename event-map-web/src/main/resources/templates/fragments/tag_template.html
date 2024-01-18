@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<body>
+		<div th:fragment="inputTemplate" th:remove="tag" >
+			<label class="settingsKey" th:text="#{label + '.' + ${item.settingsKey}}"></label>
+			<input th:if="${item.type == 'pass' || item.type == 'password'}"
+				   th:type="'password'"
+				   th:classappend="${item.userSettingsType.type} + 'Type'"
+				   th:name="${item.settingsKey} +'_'+ ${item.layerId}" class="form-control settingsValue"
+				   th:value="${item.settingsValue}"/>
+			
+			<input th:if="${item.type != 'pass' && item.type != 'password'}"
+				   th:type="'text'"
+				   th:classappend="${item.type} + 'Type'"
+				   th:name="${item.settingsKey} +'_'+ ${item.layerId}" class="form-control settingsValue"
+				   th:value="${item.settingsValue}"/>
+				   
+				 <p th:if="${item.settingsKey == 'MapCoordinates'}" ><span class="text-danger">*</span><span class="userSettingCoordinatesInformation" th:text="#{label.please.entry.coordinates.correctly}"></span>  </p>
+		</div>
+
+		<div th:fragment="switchTemplate" th:remove="tag">
+			<div class="userSettingsCheckbox">
+			    <span class="col-3 m-switch m-switch--sm switch">
+					<label>
+						<input type="checkbox"
+							   th:name="${item.settingsKey} +'_'+ ${item.layerId}"
+							   th:checked="${item.settingsValue == 'true'}"
+							   th:value="${item?.settingsValue}">
+						 <span class="slider round"></span>
+					</label>
+				</span>
+				<span class="col-9 userSettingsChkLabel" th:text="(${item.settingsKey == 'ExcelEventReserved1'} ? @{ ${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved1') ) } : ${ @environment.getProperty('event.reserved1') } } : 
+				 (${item.settingsKey == 'ExcelEventReserved2'} ?  @{ ${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved2') ) } : ${ @environment.getProperty('event.reserved2') } } : 			 
+				 (${item.settingsKey == 'ExcelEventReserved3'} ?  @{ ${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved3') ) } : ${ @environment.getProperty('event.reserved3') } } : 
+				 (${item.settingsKey == 'ExcelEventReserved4'} ?  @{ ${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved4') ) } : ${ @environment.getProperty('event.reserved4') } } : 
+				 (${item.settingsKey == 'ExcelEventReserved5'} ?  @{ ${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved5') ) } : ${ @environment.getProperty('event.reserved5') } } :
+				 
+	
+				 (${item.settingsKey == 'EventTableViewReserved1'} ?  @{ ${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved1') ) } : ${ @environment.getProperty('event.reserved1') } } :
+				 (${item.settingsKey == 'EventTableViewReserved2'} ?  @{ ${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved2') ) } : ${ @environment.getProperty('event.reserved2') } } :
+				 (${item.settingsKey == 'EventTableViewReserved3'} ?  @{ ${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved3') ) } : ${ @environment.getProperty('event.reserved3') } } :
+				 (${item.settingsKey == 'EventTableViewReserved4'} ?  @{ ${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved4') ) } : ${ @environment.getProperty('event.reserved4') } } :
+				 (${item.settingsKey == 'EventTableViewReserved5'} ?  @{ ${ @environment.getProperty('using.helm.config') == 'false' } ? ${T(com.imst.event.map.web.utils.MyStringUtils).toUTF8( @environment.getProperty('event.reserved5') ) } : ${ @environment.getProperty('event.reserved5') } } 
+				 
+				 : #{label + '.' + ${item.settingsKey}}))))))))))
+				
+				
+				 "
+></span>
+			</div>	
+		</div>
+		<div th:fragment="checkboxTemplate" th:remove="tag" >
+			<label style="display:block;">&nbsp;</label>
+			<label class="custom-control custom-checkbox">
+				<input th:name="${item.settingsKey} +'_'+ ${item.layerId}"
+					   th:type="${item.type}" class="custom-control-input" th:checked="${item.settingsValue == 'true'}" th:value="${item?.settingsValue}"/>
+				<span class="custom-control-indicator"></span>
+				<span class="custom-control-description" th:text="#{label + '.' + ${item.settingsKey}}"></span>
+			</label>
+		</div>
+		
+
+		
+		
+			
+			
+		<div th:fragment="multiselectTemplate" th:remove="tag">
+            <label class="settingsKey" th:text="#{label + '.' + ${item.settingsKey}}"></label>
+            <div class="m-select2">
+                <select multiple="multiple" class="form-control m-select2 m_select2_12_4 settingsValue"
+                        th:name="${item.settingsKey} +'_'+ ${item.layerId}" id="selectId" >
+                    <option th:each="listItem : ${item.settingsListValue}"
+                            th:text="${listItem.get('name')}"
+					        th:value="${listItem.get('id')}"
+					        th:selected="${item.settingsValue != null ? (',' + item.settingsValue + ',').contains(',' + listItem.get('id').toString() + ',') : 0}">
+                </select>
+            </div>
+        </div>  
+        
+		<div th:fragment="openPageSelectTemplate" th:remove="tag">
+            <label class="settingsKey" th:text="#{label + '.' + ${item.settingsKey}}"></label>
+            <div class="m-select2">
+                <select class="form-control m-select2 m_select2_12_4 settingsValue"
+                        th:name="${item.settingsKey} +'_'+ ${item.layerId}" id="openPageSelectId">
+                    <option></option>
+                    <option th:text="#{label.news}" th:value="region" th:selected="${item.settingsValue != null ? 'region'==item.settingsValue : 0}"></option>       
+					<option th:text="#{label.live.table}" th:value="event-table" th:selected="${item.settingsValue != null ? 'event-table'==item.settingsValue : 0}"></option>        
+					<option th:text="#{label.timeslider}" th:value="timeDimension" th:selected="${item.settingsValue != null ? 'timeDimension'==item.settingsValue : 0}"></option>        
+					<option th:text="#{label.heatmap}" th:value="heatmap" th:selected="${item.settingsValue != null ? 'heatmap'==item.settingsValue : 0}"></option>        
+					<option th:text="#{label.table}" th:value="event-table-view" th:selected="${item.settingsValue != null ? 'event-table-view'==item.settingsValue : 0}"></option>                                                    
+                </select>
+                
+            </div>
+        </div>    
+
+		<div th:fragment="selectTemplate" th:remove="tag">
+            <label class="settingsKey" th:text="#{label + '.' + ${item.settingsKey}}"></label>
+            <div class="m-select2">
+                <select class="form-control m-select2 m_select2_12_4 settingsValue"
+                        th:name="${item.settingsKey} +'_'+ ${item.layerId}" id="selectId">
+                    <option th:each="listItem : ${item.settingsListValue}"
+                            th:text="${listItem.get('name')}"
+					        th:value="${listItem.get('id')}"
+					        th:selected="${item.settingsValue != null ? listItem.get('id').toString()==item.settingsValue : 0}">
+                </select>
+            </div>
+        </div>    
+
+		
+		<div th:fragment="labelTemplate" th:remove="tag" th:if="${not #lists.isEmpty(item.settingsListValue)}">
+			<label class="settingsKey" th:text="#{label + '.' + ${item.settingsKey}}"></label>
+			<div th:each="listItem : ${item.settingsListValue}">
+
+				<span th:text="${listItem.get('eventGroupName')}" class="settingsValue"></span>
+			
+			</div>
+					
+		</div>
+		
+		<div th:fragment="dateTimePickerTemplate" th:remove="tag">
+			<div class="input-group dateTimePickerDiv" data-target-input="nearest" th:data-target="'.'+${item.settingsKey} +'_'+ ${item.layerId}" >
+				<label class="settingsKey" for="country" th:text="#{label + '.' + ${item.settingsKey}}" style="width: 100%">Tarih</label> 
+				<input type="text" th:name="${item.settingsKey} +'_'+ ${item.layerId}" 
+				
+				th:defaultValue="${item.settingsValue}"			
+				
+				th:class="${item.settingsKey} +'_'+ ${item.layerId} + ' ' + 'form-control datetimepicker-input' + ' ' + 'settingsValue'" 
+				th:id="${item.settingsKey} +'_'+ ${item.layerId}"
+				th:data-target="'.'+${item.settingsKey} +'_'+ ${item.layerId}" 
+				placeholder="DD.MM.YYYY HH:mm:ss" 
+				/>
+				<div class="input-group-append" th:data-target="'.'+${item.settingsKey} +'_'+ ${item.layerId}"  data-toggle="datetimepicker">
+					<div class="input-group-text "><i class="icon-calendar heatmapSearchDateIcon"></i></div>
+				</div>
+			</div>
+		</div>
+		
+
+		
+		
+	</body>
+</html>
