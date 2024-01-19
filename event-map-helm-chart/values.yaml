@@ -61,21 +61,9 @@ postgresql:
       password: "1qaz2wsx-"
       
 redis:
-  enabled: true
   host: "eventmap-redis"
-  image:
   port: 6379
-    registry: "177.177.0.236:5000"
   password: "1qaz2wsx-"
-  global:
-    redis:
-      password: "1qaz2wsx-"
-  fullnameOverride: "eventmap-redis"
-  master:
-    containerPorts:
-      redis: 6379
-  replica:
-    replicaCount: 0
 
 imageLocation: docker.io/library
 
