@@ -3,14 +3,14 @@ name: eventmapchart
 description: A Helm chart for Kubernetes
 
 dependencies:
-  - condition: postgresql.enabled
-    name: postgresql
-    version: 15.3.0
-    repository: '@stable'
-  - condition: redis.enabled
-    name: redis
-    version: 17.14.6
-    repository: '@stable'
+ # - condition: postgresql.enabled
+ #   name: postgresql
+ #   version: 15.3.0
+ #   repository: '@stable'
+ # - condition: redis.enabled
+ #   name: redis
+ #   version: 17.14.6
+ #   repository: '@stable'
 
 # A chart can be either an 'application' or a 'library' chart.
 #
