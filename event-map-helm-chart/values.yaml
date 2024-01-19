@@ -59,20 +59,10 @@ postgresql:
     initdb:
       user: "postgres"
       password: "1qaz2wsx-"
-
 redis:
-  enabled: true
-  image:
-    registry: "177.177.0.236:5000"
-  global:
-    redis:
-      password: "1qaz2wsx-"
-  fullnameOverride: "eventmap-redis"
-  master:
-    containerPorts:
-      redis: 6379
-  replica:
-    replicaCount: 0
+  host: "eventmap-redis"
+  port: 6379
+  password: "1qaz2wsx-"
 
 imageLocation: docker.io/library
 
