@@ -15,7 +15,7 @@ checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs:
 	    stage('helm install event-map-chart-web'){
                 steps{
                  script{
-		   //sh 'helm uninstall event-map-chart-web'
+		   sh 'helm uninstall event-map-chart-admin'
 	           sh 'helm install event-map-chart-web ./event-map-helm-chart'
                  }
                 }
