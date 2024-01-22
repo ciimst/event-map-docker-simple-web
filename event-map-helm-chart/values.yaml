@@ -11,8 +11,8 @@ Dep:
       tag: 1.4.30
     command: 
       - java
-      - -Xms1g 
-      - -Xmx2g
+      - -Xms512m
+      - -Xmx1g
       - -jar 
       - /target/event-map-web.jar
     containerport: 8443
