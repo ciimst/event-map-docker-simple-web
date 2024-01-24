@@ -1,5 +1,5 @@
 REGISRTY=docker.io/imst
-TAG=1.4.30
+TAG=1.4.6
 MINIKUBE_DRIVER=docker
 
 
