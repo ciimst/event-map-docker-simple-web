@@ -13,7 +13,7 @@ COPY event-map-web/src src
 COPY event-map-web/pom.xml pom.xml
 RUN mvn package -DskipTests
 
-RUN cd /target && mv event-map-web-1.4.30.jar event-map-web.jar
+RUN cd /target && mv event-map-web-1.4.6.jar event-map-web.jar
 
  # Copy images
 COPY static/favicon.ico /event-map/images/static/favicon.ico
