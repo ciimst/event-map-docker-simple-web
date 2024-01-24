@@ -4,8 +4,8 @@ FROM event_map_based
 #COPY .m2 /root/.m2
 
 
-COPY event-map-hibernate-entities /event-map-hibernate-entities
-RUN cd /event-map-hibernate-entities && mvn install 
+#COPY event-map-hibernate-entities /event-map-hibernate-entities
+#RUN cd /event-map-hibernate-entities && mvn install 
 
 RUN cd /
 
