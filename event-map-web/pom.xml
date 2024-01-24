@@ -10,16 +10,24 @@
 	</parent>
 	<groupId>com.imst.event.map</groupId>
 	<artifactId>event-map-web</artifactId>
-	<version>1.4.30</version>
+	<version>1.4.6</version>
 	<packaging>jar</packaging>
 	<name>event-map-web</name>
 	<description>Event Map Projesi için web projesidir</description>
 
 	<properties>
 		<java.version>1.8</java.version>
-		<hibernate-entities-version>1.4.30</hibernate-entities-version>
+		<hibernate-entities-version>1.4.6</hibernate-entities-version>
 		<keycloak.version>22.0.1</keycloak.version>
 	</properties>
+
+
+	<repositories>
+	    <repository>
+		<id>nexus-releases</id>
+		<url>http://177.177.0.236:8081/repository/event-map-hibernate-entities/</url>
+	    </repository>
+	</repositories>
 	
 
 	<dependencies>
@@ -313,7 +321,7 @@
 		</plugins>
 	</build>
 
-	<distributionManagement>
+	<!--<distributionManagement>
 	    <repository>
 	      <id>nexus</id>
 	      <name>Releases</name>
@@ -324,6 +332,6 @@
 	      <name>Snapshot</name>
 	      <url>http://177.177.0.236:8081/repository/maven-snapshots</url>
 	    </snapshotRepository>
-	  </distributionManagement>
+	  </distributionManagement>-->
 
 </project>
